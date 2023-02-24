@@ -1,0 +1,31 @@
+
+const { Model, DataTypes } = require('sequelize');
+
+class dtb_mensagem_premium extends Model {
+  static init(sequelize) {
+    super.init({
+      bot_id:DataTypes.INTEGER,
+      atencao:DataTypes.TEXT,
+      win:DataTypes.TEXT,
+      loss:DataTypes.TEXT,
+      parcial:DataTypes.TEXT,
+      final:DataTypes.TEXT,
+      statusparcialfinal:DataTypes.INTEGER,
+    }, {
+      sequelize
+    });
+  };
+
+
+  static associate(models){
+    this.belongsTo(models.dtb_bots,{ foreignKey: 'bot_id', as:'usuario' })
+  
+    }
+ 
+
+}
+
+module.exports = dtb_mensagem_premium;
+
+
+
