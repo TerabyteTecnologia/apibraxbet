@@ -441,10 +441,10 @@ async update(req,res){
             })
         }
     const {id} = req.params;
-    const {nome,tipo_jogo,bot_token,chat_id,usuario_id} = req.body;
+    const {nome,tipojogo_id,bot_token,chat_id,usuario_id} = req.body;
         let contract = new ValidationContract();
         contract.isRequired(nome, 'nome', 'O Nome é obrigatorio');
-        contract.isRequired(tipo_jogo, 'tipo_jogo', 'O tipo_jogo é obrigatorio');
+        contract.isRequired(tipojogo_id, 'tipojogo_id', 'O jogo é obrigatorio');
         contract.isRequired(bot_token, 'bot_token', 'O bot_token é obrigatorio');
         contract.isRequired(chat_id, 'chat_id', 'O chat_id é obrigatorio');
         contract.isRequired(usuario_id, 'usuario_id', 'O usuario é obrigatorio');
@@ -457,18 +457,17 @@ async update(req,res){
         };
     
         const tipoJogo = await TipoJogo.findOne({
-            where:{ id:tipo_jogo }
+            where:{ id:tipojogo_id }
     
            });
         if(!tipoJogo){
             return res.status(201).json({
-                msg:'Jogo não existe',
+                msg:'Jogo não existe dd' ,
             
             })
         }
         const grupoOld = await Grupo.findOne({
             where:{ id:id }
-    
            });
     if(!grupoOld){
         return res.status(201).json({
@@ -485,7 +484,7 @@ async update(req,res){
 
     const grupo = await grupoOld.update({
         nome,
-        tipojogo_id:tipo_jogo,
+        tipojogo_id:tipoJogo.id,
         bot_token:encripytToken,
         chat_id:encript_chatid,
         iv_bot_token:iv_bot_token,
@@ -866,10 +865,10 @@ async bucaGrupoRodrigo(req,res){
         grupo.bot_token = bot_token_decrypt;
         grupo.chat_id  =chat_id_decrypt;
         grupo.chat_id_free  =chat_id_free_decrypt;
-    return res.status(201).send({
-        grupo:grupo,
-        padroes:tipoJogo
-    })
+        return res.status(201).send({
+            grupo:grupo,
+            padroes:tipoJogo
+        })
 }
 
 

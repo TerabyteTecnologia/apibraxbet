@@ -587,7 +587,7 @@ async update(req,res){
             })
         }
     const {id} = req.params;
-    const {nome,coleta_dados,nome_tabela,caminho_robo,link_acesso,tipo_jogo} = req.body;
+    const {nome,coleta_dados,nome_tabela,caminho_robo,link_acesso,caminho_robo_adm} = req.body;
     let contract = new ValidationContract();
     contract.isRequired(nome, 'nome', 'O Nome é obrigatorio');
     contract.isRequired(caminho_robo, 'caminho_robo', 'O dado é obrigatorio');
