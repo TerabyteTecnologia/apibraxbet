@@ -832,11 +832,13 @@ async bucaGrupoRodrigo(req,res){
             {association:"mensagenspremium"},
             {association:"mensagensfantan"},
             {association:"mensagenspenalty"},
+            {association:"mensagensminer"},
+            {association:"mensagensaviator"},
         ]},
 
         );
-        const tipoJogo = await TipoJogo.findOne({where:{id:grupo.tipojogo_id}},
-            {include:[
+        const tipoJogo = await TipoJogo.findOne( {where:{id:grupo.tipojogo_id},
+           include:[
                 {association:"estrategiascrash"},
                 {association:"estrategiasdouble"},
                 {association:"estrategiasbet"},
@@ -845,7 +847,8 @@ async bucaGrupoRodrigo(req,res){
                 {association:"estrategiadoublepremium"},
                 {association:"estrategiasfutballstudio"},
                 {association:"estrategiapenalty"},
-              
+                {association:"estrategiasminers"},
+                {association:"estrategiasaviator"},
             ]},
     
         );
