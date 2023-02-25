@@ -18,6 +18,7 @@ class dtb_bots extends Model {
       loss:DataTypes.INTEGER,
       free:DataTypes.STRING,
       total_premium:DataTypes.INTEGER,
+      tipo_jogo:DataTypes.STRING,
     }, {
       sequelize
     });
