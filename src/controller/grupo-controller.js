@@ -123,7 +123,7 @@ async store(req,res){
             iv_chat_id:iv_chat_id,
             iv_chat_id_free:iv_chat_id_free,
             usuario_id,
-            tipoJogo:tipoJogo.nome,
+            tipo_jogo:tipoJogo.nome,
         }); 
   
      
