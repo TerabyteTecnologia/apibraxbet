@@ -1,6 +1,7 @@
 'use strict';
 
 const Grupo = require('../models/dtb_bots');
+const TipoJogo = require('../models/dtb_tipojogo');
 
  const EstrategiaPenalty = require('../models/dtb_estrategia_penalty');
 
@@ -31,25 +32,17 @@ async showPenalty(req,res){
        
 
    
-       var grupo = new Grupo();
+       var tipoJogo = new TipoJogo();
        if(usuarioLogado.permissoes.length > 0){
-         grupo = await Grupo.findOne({where:{ id:id }});
+        tipoJogo = await TipoJogo.findOne({where:{ id:id }});
        }else{
-         grupo = await Grupo.findOne({
-            where: {
-                [Op.and]: [
-                  { usuario_id: usuarioLogado.id },
-                  { id:id }
-                ]
-              }
-    
-           });
+        tipoJogo = await TipoJogo.findOne({where:{ id:id }});
        }
      
 
-       if(!grupo){
+       if(!tipoJogo){
         return res.status(201).json({
-            msg:'Grupo não existe',
+            msg:'Jog não existe',
            
         })
        }

@@ -1,6 +1,7 @@
 'use strict';
 
 const Grupo = require('../models/dtb_bots');
+const TipoJogo = require('../models/dtb_tipojogo');
 
  const Miner = require('../models/dtb_estrategia_miner');
  const MinerMensagem = require('../models/dtb_mensagem_miner');
@@ -30,26 +31,18 @@ async showEstrategia(req,res){
 
        
 
-   
-       var grupo = new Grupo();
+      
+       var tipoJogo = new TipoJogo();
        if(usuarioLogado.permissoes.length > 0){
-         grupo = await Grupo.findOne({where:{ id:id }});
+        tipoJogo = await TipoJogo.findOne({where:{ id:id }});
        }else{
-         grupo = await Grupo.findOne({
-            where: {
-                [Op.and]: [
-                  { usuario_id: usuarioLogado.id },
-                  { id:id }
-                ]
-              }
-    
-           });
+        tipoJogo = await TipoJogo.findOne({where:{ id:id }});
        }
      
 
-       if(!grupo){
+       if(!tipoJogo){
         return res.status(201).json({
-            msg:'Grupo não existe',
+            msg:'Jogo não existe',
            
         })
        }

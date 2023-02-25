@@ -6,9 +6,12 @@ module.exports ={
     password:process.env.DB_PASS,
     database:process.env.DB_NAME,
     define:{
+        charset: 'utf8mb4',
+        collate: 'utf8mb4_general_ci', 
         timestamps:true,
         underscored:true,
         freezeTableName: true,
+        
     },
 
 };
