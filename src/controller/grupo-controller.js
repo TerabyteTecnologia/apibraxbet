@@ -837,6 +837,12 @@ async bucaGrupoRodrigo(req,res){
         ]},
 
         );
+        if(!grupo){
+            return res.status(201).json({
+                msg:'Grupo não existe',
+            
+            })
+        }
         const tipoJogo = await TipoJogo.findOne( {where:{id:grupo.tipojogo_id},
            include:[
                 {association:"estrategiascrash"},

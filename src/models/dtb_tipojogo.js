@@ -5,11 +5,13 @@ class dtb_tipojogo extends Model {
   static init(sequelize) {
     super.init({
       nome:DataTypes.STRING,
-      coleta_dados:DataTypes.INTEGER,
-      nome_tabela:DataTypes.STRING,
+      win:DataTypes.INTEGER,
+      loss:DataTypes.INTEGER,
+      caminho_robo_adm:DataTypes.STRING,
       caminho_robo:DataTypes.STRING,
+      status_robo_adm:DataTypes.STRING,
       link_acesso:DataTypes.STRING,
-      tipo_jogo:DataTypes.STRING,
+   
     }, {
       sequelize
     });

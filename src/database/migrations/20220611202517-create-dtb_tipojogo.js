@@ -13,21 +13,25 @@ module.exports = {
           type: Sequelize.STRING(200),
           allowNull: false,
       },
-      coleta_dados: {
-          type: Sequelize.INTEGER,
-          allowNull: false,
+      win: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
-      nome_tabela: {
-          type: Sequelize.STRING(200),
+      loss: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
       },
       caminho_robo: {
         type: Sequelize.STRING(200),
       },
-   
-      link_acesso: {
+      caminho_robo_adm: {
         type: Sequelize.STRING(200),
       },
-      tipo_jogo: {
+      status_robo_adm: {
+        type: Sequelize.STRING(200),
+        defaultValue: "I", //A - ativo // I- inativo
+      },
+      link_acesso: {
         type: Sequelize.STRING(200),
       },
       created_at: {

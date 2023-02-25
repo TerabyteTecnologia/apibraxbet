@@ -13,6 +13,8 @@ require('dotenv').config();
  const EstrategiaRoleta = require('../models/dtb_estrategia_bet365');
  const EstrategiaMiner = require('../models/dtb_estrategia_miner');
 
+
+ const pm2 = require('pm2')
  const ValidationContract = require("../validator/fluent-validators");
 
  const authService = require('../services/auth-services');
@@ -63,13 +65,11 @@ async store(req,res){
         }
 
 
-        const {nome,coleta_dados,nome_tabela,caminho_robo,link_acesso,tipo_jogo} = req.body;
+        const {nome,coleta_dados,nome_tabela,caminho_robo,caminho_robo_adm,link_acesso,tipo_jogo} = req.body;
         let contract = new ValidationContract();
         contract.isRequired(nome, 'nome', 'O Nome é obrigatorio');
-        contract.isRequired(tipo_jogo, 'tipo_jogo', 'O tipo_jogo é obrigatorio');
-        contract.isRequired(coleta_dados, 'coleta_dados', 'O dados é obrigatorio');
-        contract.isRequired(nome_tabela, 'nome_tabela', 'O dado é obrigatorio');
         contract.isRequired(caminho_robo, 'caminho_robo', 'O dado é obrigatorio');
+        contract.isRequired(caminho_robo_adm, 'caminho_robo_adm', 'O dado é obrigatorio');
         contract.isRequired(link_acesso, 'link_acesso', 'O dado é obrigatorio');
 
         // Se os dados forem inválidos
@@ -80,10 +80,8 @@ async store(req,res){
         };
         const tipoJogo = await TipoJogo.create({
             nome,
-            tipo_jogo,
-            coleta_dados,
-            nome_tabela,
             caminho_robo,
+            caminho_robo_adm,
             link_acesso,
             
         }); 
@@ -592,10 +590,8 @@ async update(req,res){
     const {nome,coleta_dados,nome_tabela,caminho_robo,link_acesso,tipo_jogo} = req.body;
     let contract = new ValidationContract();
     contract.isRequired(nome, 'nome', 'O Nome é obrigatorio');
-    contract.isRequired(tipo_jogo, 'tipo_jogo', 'O tipo_jogo é obrigatorio');
-    contract.isRequired(coleta_dados, 'coleta_dados', 'O dados é obrigatorio');
-    contract.isRequired(nome_tabela, 'nome_tabela', 'O dado é obrigatorio');
     contract.isRequired(caminho_robo, 'caminho_robo', 'O dado é obrigatorio');
+    contract.isRequired(caminho_robo_adm, 'caminho_robo_adm', 'O dado é obrigatorio');
     contract.isRequired(link_acesso, 'link_acesso', 'O dado é obrigatorio');
 
         // Se os dados forem inválidos
@@ -622,10 +618,8 @@ async update(req,res){
 
     const tipoJogos = await jogosOld.update({
         nome,
-        tipo_jogo,
-        coleta_dados,
-        nome_tabela,
         caminho_robo,
+        caminho_robo_adm,
         link_acesso,
     }); 
 
@@ -692,7 +686,127 @@ catch(err){
 },
 
 
+async mudastatus(req,res){
+    try{
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+        const usuarioLogado = await authService.decodeToken(token);
+        
+        if(!usuarioLogado){
+            return res.status(201).json({
+                msg:'Usuario não existe',
+               
+            })
+        }
+        const {id} = req.params;
+        const tipoJogo = await TipoJogo.findOne({
+            where: {id:id }
+           });
+        if(!tipoJogo){
+            return res.status(200).send({
+                msg:'Jogo não existe'
+            });
+        }
+         console.log('tipoJogo',tipoJogo);
 
+        if(tipoJogo.status_robo_adm == "I"){
+            pm2.connect(function(err) {
+                if (err) {
+                 console.error(err)
+                 process.exit(2)
+                }
+               
+               pm2.start({
+                   script    : `${tipoJogo.caminho_robo_adm}`,
+                   name      : `maneger_${tipoJogo.nome}`,
+                   args      : `${tipoJogo.id}`,
+                   interpreter:'python3.8',
+                   }, function(err, apps) {
+                      console.log(err);
+                   })
+                  
+                })
+                pm2.disconnect();
+                 await tipoJogo.update({
+                    status_robo_adm:"A",
+                })
+    
+         }else{
+    
+            pm2.connect(function(err) {
+                if (err) {
+                 console.error(err)
+                 process.exit(2)
+                }
+                
+                pm2.stop(`maneger_${tipoJogo.nome}`, function (err, proc) {
+                    //console.log(err,proc);
+                     pm2.disconnect();
+                  })
+    
+                })
+    
+                const g = await tipoJogo.update({
+                    status_robo_adm:"I",
+                })
+          
+         }
+
+         return res.status(201).send({
+            msg:"Jogo atualizado",
+          })
+
+       
+    }
+    catch(err){
+        return res.status(200).send({
+            error:err.message
+        })
+    }
+},
+
+async zerawinloss(req,res){
+         
+    try{
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+        const usuarioLogado = await authService.decodeToken(token);
+        
+        if(!usuarioLogado){
+            return res.status(201).json({
+                msg:'Usuario não existe',
+               
+            })
+        }
+        const {id} = req.params;
+        
+        const tipoOld = await TipoJogo.findOne({
+                where:{ id:id }
+        
+            });
+        if(!tipoOld){
+            return res.status(201).json({
+                msg:'Jogo não existe',
+            
+            })
+        }
+
+   
+    const jogo = await tipoOld.update({
+       win:0,
+       loss:0
+    }); 
+
+    return res.status(201).json({
+        msg:"Jogo Atualizado com sucesso",
+        data:jogo
+
+    })
+}
+catch(err){
+    return res.status(200).send({
+        error:err.message
+    })
+}
+},
 
    
 }
