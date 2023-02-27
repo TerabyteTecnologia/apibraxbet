@@ -6,6 +6,7 @@ const authService = require('../services/auth-services');
 const controller = require('../controller/mensagens-controller');
 const controllerAviator = require('../controller/aviator-controller');
 const controllerMiner = require('../controller/miner-controller');
+const controllerParao = require('../controller/padrao-controller');
 
 
 router.get('/',authService.authorize,controller.index);
@@ -47,6 +48,14 @@ router.put('/updateaviator/:id',authService.authorize,controllerAviator.updateMe
 //Miner
 router.get('/showminer/:id/tipo/:tipo',authService.authorize,controllerMiner.showMenssagemMiner);
 router.put('/updateminer/:id',authService.authorize,controllerMiner.updateMessageMiner);
+
+
+
+
+//############### PADRAO ######################
+//Fantan
+router.get('/showfantanpadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showFantan);
+router.put('/updatefantanpadrao/:id',authService.authorize,controllerParao.updatefantan);
 
 
 module.exports =router;
