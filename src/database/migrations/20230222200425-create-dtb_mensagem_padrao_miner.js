@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('dtb_mensagem_padrao_fantan', { 
+    await queryInterface.createTable('dtb_mensagem_padrao_miner', { 
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -20,33 +20,21 @@ module.exports = {
           type: Sequelize.TEXT,
           allowNull: false,
       },
-      cofirmacao: {
+      confirmacao: {
         type: Sequelize.TEXT,
         allowNull: false,
-      },
-      win: {
-          type: Sequelize.TEXT,
-      },
-      loss: {
-          type: Sequelize.TEXT,
-      },
-      martingale: {
+     },
+      parcial:{
         type: Sequelize.TEXT,
       },
-      branco: {
+      final:{
         type: Sequelize.TEXT,
       },
-      parcial: {
-        type: Sequelize.TEXT,
-      },
-      final: {
-        type: Sequelize.TEXT,
-      },
-      statusmensagem:{
+      padrao_entrada:{
         type:Sequelize.INTEGER, // 0- inativo 1-Ativo
-        defaultValue: 0,
+        defaultValue: 1,
       },
-      statusmartingale:{
+      padrao_nao_entrada:{
         type:Sequelize.INTEGER, // 0- inativo 1-Ativo
         defaultValue: 1,
       },
@@ -54,12 +42,9 @@ module.exports = {
         type:Sequelize.INTEGER, // 0- inativo 1-Ativo
         defaultValue: 1,
       },
-      statuscoberturabranco:{
-        type:Sequelize.INTEGER, // 0- inativo 1-Ativo
-        defaultValue: 1,
-      },
 
-        
+
+      
       //Padrao
       tipomensagem:{
         type:Sequelize.INTEGER, //  1-free 2- vip  
@@ -138,6 +123,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('dtb_mensagem_padrao_fantan');
+    await queryInterface.dropTable('dtb_mensagem_padrao_miner');
   }
 };

@@ -23,6 +23,9 @@ module.exports = {
       telefone: {
         type: Sequelize.STRING(200),
       },
+      link_acesso: {
+        type: Sequelize.STRING(200),
+      },
       status: {
         type: Sequelize.STRING(200),
         defaultValue: "A", //A - ativo // I- inativo

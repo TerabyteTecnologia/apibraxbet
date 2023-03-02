@@ -95,10 +95,17 @@ async store(req,res){
             })
         };
 
-        const tipoJogo = await TipoJogo.findOne({
-            where:{ id:tipojogo_id }
-    
-           });
+     
+         const tipoJogo = await TipoJogo.findOne( {where:{id:tipojogo_id},
+            include:[
+                 {association:"mensagensfantan"},
+                 {association:"mensagensaviator"},
+                 {association:"mensagensminer"},
+                 {association:"mensagensfootballstudio"},
+                 {association:"mensagenspenalty"},
+             ]},
+     
+         );
         if(!tipoJogo){
             return res.status(201).json({
                 msg:'Jogo não existe',
@@ -150,163 +157,167 @@ async store(req,res){
                 
             }); 
         }else if(tipoJogo.nome.includes('Aviator')){
-          
-         
-        //Mensagem futballstudio #################################
-            await MsgAviator.create({
-                bot_id: grupo.id,
-                atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-                
-                cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
+            console.log(tipoJogo)
+            tipoJogo.mensagensaviator.map(async res=>{
+               
+                await MsgAviator.create({
+                    bot_id: grupo.id,
+                    atencao:res.atencao,
+                    cofirmacao:res.cofirmacao,
+                    win:res.win,
+                    loss:res.loss,
+                    martingale:res.martingale,
+                    branco:res.branco,
+                    parcial:res.parcial,
+                    final:res.final,
 
-                
-                win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                
-                loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
+                    statusmartingale:res.statusmartingale,
+                    statusparcialfinal:res.statusparcialfinal,
+                    statuscoberturabranco:res.statusparcialfinal,
 
-                martingale:'🔁 [NUMERO]º Martingale!',
 
-                branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑 Empate 🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-                parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                tipomensagem:1,
-            });
-            await MsgAviator.create({
-                bot_id: grupo.id,
-                atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-                
-                cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
+                    manhainicio:res.manhainicio,
+                    manhafim:res.manhainicio,
+                    tardeinicio:res.tardeinicio,
+                    tardefim:res.tardefim,
+                    noiteinicio:res.noiteinicio,
+                    noiteifim:res.noiteifim,
+                    statusmanha:res.statusmanha,
+                    statustarde:res.statustarde,
+                    statusnoite:res.statusnoite,
 
-                
-                win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                
-                loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
+                    tipomensagem:res.tipomensagem,
+                });
+            })
 
-                martingale:'🔁 [NUMERO]º Martingale!',
-
-                branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑 Empate 🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-                parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                tipomensagem:2,
-            });  
         }else if(tipoJogo.nome.includes('Miner')){
-    
-             await MsgMiner.create({
-                bot_id:grupo.id,
-                atencao:'⚠️ ATENÇÃO, possível entrada [ENTRADA] \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/crash">Crash</a>',
-    
-                confirmacao:'🔔 Entrada Confirmada 🔔 \n🎰 Blaze: <a href="https://blaze.com/pt/games/crash">Crash</a> \💰 Entrar após [ULTIMA_VELA] \n🚀 Auto retirar [ENTRADA]',
-    
-                parcial:'🚀Resultado parcial\n✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]',
-                final:'🚀Resultado Final\n✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]',
-                tipomensagem:1,
-            }); 
+              
+            tipoJogo.mensagensminer.map(async res=>{
+                await MsgMiner.create({
+                    bot_id:grupo.id,
+                    atencao:res.atencao,
+                    confirmacao:res.confirmacao,
+                    parcial:res.parcial,
+                    final:res.final,
+                    
+                    padrao_entrada:res.padrao_entrada,
+                    padrao_nao_entrada:res.padrao_nao_entrada,
+                    statusparcialfinal:res.statusparcialfinal,
+                   
+                    manhainicio:res.manhainicio,
+                    manhafim:res.manhainicio,
+                    tardeinicio:res.tardeinicio,
+                    tardefim:res.tardefim,
+                    noiteinicio:res.noiteinicio,
+                    noiteifim:res.noiteifim,
+                    statusmanha:res.statusmanha,
+                    statustarde:res.statustarde,
+                    statusnoite:res.statusnoite,
 
-            await MsgMiner.create({
-                bot_id:grupo.id,
-                atencao:'⚠️ ATENÇÃO, possível entrada [ENTRADA] \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/crash">Crash</a>',
-    
-                confirmacao:'🔔 Entrada Confirmada 🔔 \n🎰 Blaze: <a href="https://blaze.com/pt/games/crash">Crash</a> \💰 Entrar após [ULTIMA_VELA] \n🚀 Auto retirar [ENTRADA]',
-    
-                parcial:'🚀Resultado parcial\n✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]',
-                final:'🚀Resultado Final\n✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]',
-                tipomensagem:2,
-            }); 
+
+                    tipomensagem:res.tipomensagem,
+                }); 
+               
+            })
+          
         }else if(tipoJogo.nome.includes('Fantan')){
+           
+            tipoJogo.mensagensfantan.map(async res=>{
 
-            //Mensagem fantan
-            await MsgFantan.create({
-                bot_id: grupo.id,
-                atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-                
-                cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
+                await MsgFantan.create({
+                    bot_id: grupo.id,
+                    atencao: res.atencao,
+                    
+                    cofirmacao:res.cofirmacao,
+    
+                    
+                    win:res.win,
+                    
+                    loss:res.loss,
+    
+                    martingale:res.martingale,
+    
+                    branco:res.branco,
+                    parcial:res.parcial,
+                    final:res.final,
 
-                
-                win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                
-                loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
+                    statusmensagem:res.statusmensagem,
+                    statusmartingale:res.statusmartingale,
+                    statusparcialfinal:res.statusparcialfinal,
+                    statuscoberturabranco:res.statuscoberturabranco,
 
-                martingale:'🔁 [NUMERO]º Martingale!',
+                    manhainicio:res.manhainicio,
+                    manhafim:res.manhainicio,
+                    tardeinicio:res.tardeinicio,
+                    tardefim:res.tardefim,
+                    noiteinicio:res.noiteinicio,
+                    noiteifim:res.noiteifim,
+                    statusmanha:res.statusmanha,
+                    statustarde:res.statustarde,
+                    statusnoite:res.statusnoite,
 
-                branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑Green no Branco🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-                parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                tipomensagem:1,
-            }); 
-            //Mensagem fantan
-            await MsgFantan.create({
-                bot_id: grupo.id,
-                atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-                
-                cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
-
-                
-                win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                
-                loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-
-                martingale:'🔁 [NUMERO]º Martingale!',
-
-                branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑Green no Branco🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-                parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                tipomensagem:2,
-            }); 
+                    tipomensagem:res.tipomensagem,
+                }); 
+            })
 
         }else if(tipoJogo.nome.includes('FutbalStudio')){
-           
-            //Mensagem futballstudio #################################
-            await MsgFutballStudio.create({
-                bot_id: grupo.id,
-                atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-                
-                cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
-
-                
-                win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                
-                loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-
-                martingale:'🔁 [NUMERO]º Martingale!',
-
-                branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑 Empate 🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-                parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                tipomensagem:1,
-            });
-            await MsgFutballStudio.create({
-                bot_id: grupo.id,
-                atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-                
-                cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
-
-                
-                win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                
-                loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-
-                martingale:'🔁 [NUMERO]º Martingale!',
-
-                branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑 Empate 🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-                parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                tipomensagem:2,
-            });  
-        }else if(tipoJogo.nome.includes('Penalty')){
-        
-            const msgPenalty = await MsgPenalty.create({
-                bot_id:grupo.id,
-                atencao: '⚠️ ATENÇÃO, possível entrada [ENTRADA] \n\n⌚️ Aguarde a confirmação  \n\n🎰 BraxBet: [LINK_JOGO]  \n\n[LINK_CADASTRE_AQUI]',
-                cofirmacao:'🔔 Entrada Confirmada 🔔 \n\n🎰 BraxBet: <a href="https://braxbet.com/virtual-game/Crash_game_Aviator">Aviator</a> \n\n💰 Entrar após [ULTIMA_VELA]  \n\n🚀 Auto retirar [ENTRADA].0x',
-                tipomensagem:1,
-            });
             
-            const msgPenaltyvip = await MsgPenalty.create({
-                bot_id:grupo.id,
-                atencao: '⚠️ ATENÇÃO, possível entrada [ENTRADA] \n\n⌚️ Aguarde a confirmação  \n\n🎰 BraxBet: [LINK_JOGO]  \n\n[LINK_CADASTRE_AQUI]',
-                cofirmacao:'🔔 Entrada Confirmada 🔔 \n\n🎰 BraxBet: <a href="https://braxbet.com/virtual-game/Crash_game_Aviator">Aviator</a> \n\n💰 Entrar após [ULTIMA_VELA]  \n\n🚀 Auto retirar [ENTRADA].0x',
-                tipomensagem:2,
-            }); 
+            tipoJogo.mensagensfootballstudio.map(async res=>{
+                await MsgFutballStudio.create({
+                    bot_id: grupo.id,
+                    atencao:res.atencao,
+                    cofirmacao:res.cofirmacao,
+                    win:res.win,
+                    loss:res.loss,
+                    martingale:res.martingale,
+                    branco:res.branco,
+                    parcial:res.parcial,
+                    final:res.final,
+
+                    statusmensagem:res.statusmensagem,
+                    statusmartingale:res.statusmartingale,
+                    statusparcialfinal:res.statusparcialfinal,
+                    statuscoberturabranco:res.statuscoberturabranco,
+                    
+                    
+                    manhainicio:res.manhainicio,
+                    manhafim:res.manhainicio,
+                    tardeinicio:res.tardeinicio,
+                    tardefim:res.tardefim,
+                    noiteinicio:res.noiteinicio,
+                    noiteifim:res.noiteifim,
+                    statusmanha:res.statusmanha,
+                    statustarde:res.statustarde,
+                    statusnoite:res.statusnoite,
+                    
+                    tipomensagem:res.tipomensagem,
+                });
+            })
+       
+            
+        }else if(tipoJogo.nome.includes('Penalty')){
+            
+            tipoJogo.mensagenspenalty.map(async res=>{
+
+                await MsgPenalty.create({
+                    bot_id: grupo.id,
+                    atencao: res.atencao,
+                    cofirmacao:res.cofirmacao,
+
+                    manhainicio:res.manhainicio,
+                    manhafim:res.manhainicio,
+                    tardeinicio:res.tardeinicio,
+                    tardefim:res.tardefim,
+                    noiteinicio:res.noiteinicio,
+                    noiteifim:res.noiteifim,
+                    statusmanha:res.statusmanha,
+                    statustarde:res.statustarde,
+                    statusnoite:res.statusnoite,
+
+                    tipomensagem:res.tipomensagem,
+                }); 
+            })
+         
         }else if(tipoJogo.nome.includes("CPremium")){
                 
             const msgPremium = await MsgPremium.create({
@@ -380,6 +391,7 @@ async store(req,res){
         return res.status(201).json({
             resolucao:true,
             msg:"Grupo cadastrado com sucesso",
+            teste:tipoJogo,
         })
      
 

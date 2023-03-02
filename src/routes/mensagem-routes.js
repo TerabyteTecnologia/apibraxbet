@@ -53,9 +53,26 @@ router.put('/updateminer/:id',authService.authorize,controllerMiner.updateMessag
 
 
 //############### PADRAO ######################
-//Fantan
+//Fantan PADRAO
 router.get('/showfantanpadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showFantan);
 router.put('/updatefantanpadrao/:id',authService.authorize,controllerParao.updatefantan);
 
+//Aviator PADRAO
+router.get('/showaviatorpadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showMensagemaviator);
+router.put('/updateaviatorpadrao/:id',authService.authorize,controllerParao.updateMensagemaviator);
+
+
+
+//Miner PADRAO
+router.get('/showminerpadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showMenssagemMiner);
+router.put('/updateminerpadrao/:id',authService.authorize,controllerParao.updateMessageMiner);
+
+//FutballStudio PADRAO
+router.get('/showfutballstudiopadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showFutbalStuido);
+router.put('/updatefutballstudiopadrao/:id',authService.authorize,controllerParao.updateFutbalStuido);
+
+//Penalty
+router.get('/showpenaltypadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showPenalty);
+router.put('/updatepenaltypadrao/:id',authService.authorize,controllerParao.updatePenalty);
 
 module.exports =router;

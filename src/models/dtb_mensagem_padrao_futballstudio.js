@@ -1,7 +1,7 @@
 
 const { Model, DataTypes } = require('sequelize');
 
-class dtb_mensagem_padrao_fantan extends Model {
+class dtb_mensagem_padrao_futballstudio extends Model {
   static init(sequelize) {
     super.init({
       bot_id:DataTypes.INTEGER,
@@ -18,7 +18,6 @@ class dtb_mensagem_padrao_fantan extends Model {
       statusparcialfinal:DataTypes.INTEGER,
       statuscoberturabranco:DataTypes.INTEGER,
 
-      
       //padrao
       tipomensagem:DataTypes.INTEGER,
       manhainicio:DataTypes.STRING,
@@ -30,7 +29,7 @@ class dtb_mensagem_padrao_fantan extends Model {
       statusmanha:DataTypes.INTEGER,
       statustarde:DataTypes.INTEGER,
       statusnoite:DataTypes.INTEGER,
-      
+    
     }, {
       sequelize
     });
@@ -45,7 +44,7 @@ class dtb_mensagem_padrao_fantan extends Model {
 
 }
 
-module.exports = dtb_mensagem_padrao_fantan;
+module.exports = dtb_mensagem_padrao_futballstudio;
 
 
 

@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('dtb_mensagem_padrao_fantan', { 
+    await queryInterface.createTable('dtb_mensagem_padrao_futballstudio', { 
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -23,7 +23,7 @@ module.exports = {
       cofirmacao: {
         type: Sequelize.TEXT,
         allowNull: false,
-      },
+     },
       win: {
           type: Sequelize.TEXT,
       },
@@ -59,7 +59,7 @@ module.exports = {
         defaultValue: 1,
       },
 
-        
+
       //Padrao
       tipomensagem:{
         type:Sequelize.INTEGER, //  1-free 2- vip  
@@ -138,6 +138,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('dtb_mensagem_padrao_fantan');
+    await queryInterface.dropTable('dtb_mensagem_padrao_futballstudio');
   }
 };

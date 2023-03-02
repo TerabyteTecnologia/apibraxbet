@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('dtb_mensagem_padrao_fantan', { 
+    await queryInterface.createTable('dtb_mensagem_padrao_penalty', { 
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -17,50 +17,29 @@ module.exports = {
         onDelete: 'CASCADE',
       },
       atencao: {
-          type: Sequelize.TEXT,
-          allowNull: false,
+        type: Sequelize.TEXT,
+        allowNull: false,
       },
       cofirmacao: {
         type: Sequelize.TEXT,
         allowNull: false,
       },
-      win: {
-          type: Sequelize.TEXT,
-      },
-      loss: {
-          type: Sequelize.TEXT,
-      },
-      martingale: {
+      parcial:{
         type: Sequelize.TEXT,
+        allowNull: true,
       },
-      branco: {
+      final:{
         type: Sequelize.TEXT,
-      },
-      parcial: {
-        type: Sequelize.TEXT,
-      },
-      final: {
-        type: Sequelize.TEXT,
-      },
-      statusmensagem:{
-        type:Sequelize.INTEGER, // 0- inativo 1-Ativo
-        defaultValue: 0,
-      },
-      statusmartingale:{
-        type:Sequelize.INTEGER, // 0- inativo 1-Ativo
-        defaultValue: 1,
+        allowNull: true,
       },
       statusparcialfinal:{
         type:Sequelize.INTEGER, // 0- inativo 1-Ativo
         defaultValue: 1,
       },
-      statuscoberturabranco:{
-        type:Sequelize.INTEGER, // 0- inativo 1-Ativo
-        defaultValue: 1,
+      statusmensagem:{
+        type:Sequelize.INTEGER, // 0- config1 1-config2 2- config3  3- config4 
+        defaultValue: 0,
       },
-
-        
-      //Padrao
       tipomensagem:{
         type:Sequelize.INTEGER, //  1-free 2- vip  
         defaultValue: 1,
@@ -116,7 +95,8 @@ module.exports = {
         defaultValue: 0,
         allowNull: true,
       },
-      //fim padrao
+    
+    
       
       created_at: {
         type: Sequelize.DATE,
@@ -138,6 +118,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('dtb_mensagem_padrao_fantan');
+    await queryInterface.dropTable('dtb_mensagem_padrao_penalty');
   }
 };

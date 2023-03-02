@@ -8,6 +8,7 @@ class usuarios extends Model {
       email:DataTypes.STRING,
       senha:DataTypes.STRING,
       telefone:DataTypes.STRING,
+      link_acesso:DataTypes.STRING,
       status:DataTypes.STRING,
       datavencimento:DataTypes.DATE,
     }, {

@@ -28,7 +28,12 @@ const dtb_mensagem_miner = require('../models/dtb_mensagem_miner');
 const dtb_estrategia_bet365 = require('../models/dtb_estrategia_bet365');
 const dtb_mensagem_bet365 = require('../models/dtb_mensagem_bet365');
 
-
+//#### PAdrao
+const dtb_mensagem_padrao_fantan = require('../models/dtb_mensagem_padrao_fantan');
+const dtb_mensagem_padrao_aviator = require('../models/dtb_mensagem_padrao_aviator');
+const dtb_mensagem_padrao_miner = require('../models/dtb_mensagem_padrao_miner');
+const dtb_mensagem_padrao_futballstudio = require('../models/dtb_mensagem_padrao_futballstudio');
+const dtb_mensagem_padrao_penalty = require('../models/dtb_mensagem_padrao_penalty');
 
 
 
@@ -59,6 +64,11 @@ dtb_estrategia_aviator.init(connection);
 dtb_mensagem_aviator.init(connection);
 dtb_estrategia_miner.init(connection);
 dtb_mensagem_miner.init(connection);
+dtb_mensagem_padrao_fantan.init(connection);
+dtb_mensagem_padrao_aviator.init(connection);
+dtb_mensagem_padrao_miner.init(connection);
+dtb_mensagem_padrao_futballstudio.init(connection);
+dtb_mensagem_padrao_penalty.init(connection);
 
 
 
@@ -92,3 +102,8 @@ dtb_estrategia_aviator.associate(connection.models);
 dtb_mensagem_aviator.associate(connection.models);
 dtb_estrategia_miner.associate(connection.models);
 dtb_mensagem_miner.associate(connection.models);
+dtb_mensagem_padrao_fantan.associate(connection.models);
+dtb_mensagem_padrao_aviator.associate(connection.models);
+dtb_mensagem_padrao_miner.associate(connection.models);
+dtb_mensagem_padrao_futballstudio.associate(connection.models);
+dtb_mensagem_padrao_penalty.associate(connection.models);

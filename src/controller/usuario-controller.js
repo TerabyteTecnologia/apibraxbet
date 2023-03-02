@@ -70,13 +70,14 @@ async updatesenha(req,res){
 async store(req,res){
          
             try{
-            const {nome,senha,email,telefone,datavencimento} = req.body;
+            const {nome,senha,email,telefone,datavencimento,link_acesso} = req.body;
             const usuarioExist = await Usuario.findOne({where:{email:email}});
             let contract = new ValidationContract();
             contract.isRequired(nome, 'nome', 'O Nome é obrigatorio');
             contract.isRequired(senha, 'senha', 'A senha é obrigatorio');
             contract.isRequired(email, 'email', 'O email é obrigatorio');
             contract.isEmail(email, 'email', 'O email é Invalido');
+            contract.isRequired(link_acesso, 'link_acesso', 'O link é obrigatorio');
             contract.isValue(usuarioExist, 'email', 'O email é já existe');
             // Se os dados forem inválidos
             if (!contract.isValid()) {
@@ -90,6 +91,7 @@ async store(req,res){
                 senha:senhaNova,
                 email,
                 telefone,
+                link_acesso,
                 datavencimento  
             }); 
 
@@ -112,7 +114,7 @@ async update(req,res){
          
         try{
             const {id} = req.params;
-        const {nome,email,senha,telefone,datavencimento} = req.body;
+        const {nome,email,senha,telefone,datavencimento,link_acesso} = req.body;
        
        
         let contract = new ValidationContract();
@@ -123,6 +125,7 @@ async update(req,res){
         const usuarioExist2  = await Usuario.findOne({where:{id:id}});
         contract.isRequired(nome, 'nome', 'O nome é obrigatorio');
         contract.isRequired(email, 'email', 'O email é obrigatorio');
+        contract.isRequired(link_acesso, 'link_acesso', 'O email é obrigatorio');
         contract.isEmailUpdade(usuarioExist,usuarioExist2, 'email', 'O email  já existe');
         // Se os dados forem inválidos
         if (!contract.isValid()) {
@@ -145,6 +148,7 @@ async update(req,res){
             senha:senhaNova,
             email,
             telefone,
+            link_acesso,
             datavencimento,
             
         }); 
