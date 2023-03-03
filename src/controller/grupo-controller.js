@@ -453,13 +453,14 @@ async update(req,res){
             })
         }
     const {id} = req.params;
-    const {nome,tipojogo_id,bot_token,chat_id,usuario_id} = req.body;
+    const {nome,tipojogo_id,bot_token,chat_id,usuario_id,chat_id_free} = req.body;
         let contract = new ValidationContract();
         contract.isRequired(nome, 'nome', 'O Nome é obrigatorio');
         contract.isRequired(tipojogo_id, 'tipojogo_id', 'O jogo é obrigatorio');
         contract.isRequired(bot_token, 'bot_token', 'O bot_token é obrigatorio');
         contract.isRequired(chat_id, 'chat_id', 'O chat_id é obrigatorio');
         contract.isRequired(usuario_id, 'usuario_id', 'O usuario é obrigatorio');
+        contract.isRequired(chat_id_free, 'chat_id_free', 'O chat_id é obrigatorio');
 
         // Se os dados forem inválidos
         if (!contract.isValid()) {
@@ -481,12 +482,12 @@ async update(req,res){
         const grupoOld = await Grupo.findOne({
             where:{ id:id }
            });
-    if(!grupoOld){
-        return res.status(201).json({
-            msg:'Grupo não existe',
-           
-        })
-    }
+        if(!grupoOld){
+            return res.status(201).json({
+                msg:'Grupo não existe',
+            
+            })
+        }
 
 
     const bot_tokenCripto= await encrypt(bot_token);
@@ -494,13 +495,18 @@ async update(req,res){
     const [iv_bot_token, encripytToken] = bot_tokenCripto.split(':');
     const [iv_chat_id, encript_chatid] = chat_idCripto.split(':');
 
+    const chat_idCripto_free= await encrypt(chat_id_free);
+    const [iv_chat_id_free, encript_chatid_free] = chat_idCripto_free.split(':');
+
     const grupo = await grupoOld.update({
         nome,
         tipojogo_id:tipoJogo.id,
         bot_token:encripytToken,
         chat_id:encript_chatid,
+        chat_id_free:encript_chatid_free,
         iv_bot_token:iv_bot_token,
         iv_chat_id:iv_chat_id,
+        iv_chat_id_free:iv_chat_id_free,
         usuario_id,
     }); 
 
@@ -666,7 +672,7 @@ async ligarbot(req,res){
         })
        }
 
-       
+     console.log('grupo',grupo);
 
      if(grupo.status == "I"){
         pm2.connect(function(err) {

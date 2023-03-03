@@ -113,7 +113,7 @@ async store(req,res){
 async update(req,res){
          
         try{
-            const {id} = req.params;
+        const {id} = req.params;
         const {nome,email,senha,telefone,datavencimento,link_acesso} = req.body;
        
        
