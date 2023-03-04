@@ -148,7 +148,7 @@ async store(req,res){
               }); 
 
          
-        }else if(tipoJogo.nome.includes('Aviator')){
+        }else if(tipoJogo.nome.includes('Aviator') || tipoJogo.nome.includes('Spaceman')){
           //Estrategias futballstudio #################################
            await EstrategiaAviator.create({
             bot_id:tipoJogo.id,
@@ -199,7 +199,7 @@ async store(req,res){
             tipomensagem:2,
            });  
       
-        }else if(tipoJogo.nome.includes('Miner')){
+        }else if(tipoJogo.nome.includes('Mines')){
           await EstrategiaMiner.create({
               bot_id:tipoJogo.id,
               espera:2,
@@ -314,7 +314,7 @@ async store(req,res){
           }); 
           
    
-        }else if(tipoJogo.nome.includes('FutbalStudio')){
+        }else if(tipoJogo.nome.includes('FootBallStudio') || tipoJogo.nome.includes('FootballStudioDice')){
           //Estrategias futballstudio #################################
           await EstrategiaFutbalStudio.create({
             bot_id:tipoJogo.id,
@@ -396,227 +396,6 @@ async store(req,res){
               lista:4,
               sair_em:5
           }); 
-         ///Monta as estrategias e mensagem ;;;;; melhorar isso atravazes de utils
-      if(tipoJogo.nome.includes('Double')){
-
-          //Estrategias doubles
-              await EstrategiaDouble.create({
-                  bot_id:tipoJogo.id,
-                  nome:'Sequencia 5 preto',
-                  sequencia:'2,2,2,2,2,2',
-                  apostar_em:'1',
-                  martingale:'2',
-              }); 
-
-              await EstrategiaDouble.create({
-                  bot_id:tipoJogo.id,
-                  nome:'Sequencia 5 vermelho',
-                  sequencia:'1,1,1,1,1,1',
-                  apostar_em:'2',
-                  martingale:'2',
-              }); 
-
-
-              await EstrategiaDouble.create({
-                  bot_id:tipoJogo.id,
-                  nome:'Alternancia 5 preto',
-                  sequencia:'1,2,1,2,1',
-                  apostar_em:'2',
-                  martingale:'2',
-              }); 
-
-              await EstrategiaDouble.create({
-                  bot_id:tipoJogo.id,
-                  nome:'Alternancia 5 vermelho',
-                  sequencia:'2,1,2,1,2',
-                  apostar_em:'1',
-                  martingale:'2',
-              }); 
-              
-              await EstrategiaDouble.create({
-                  bot_id:tipoJogo.id,
-                  nome:'Dois em dois preto',
-                  sequencia:'2,2,1,1,2',
-                  apostar_em:'2',
-                  martingale:'2',
-              });
-              
-              
-              await EstrategiaDouble.create({
-                  bot_id:tipoJogo.id,
-                  nome:'Dois em dois vermelho',
-                  sequencia:'1,1,2,2,1',
-                  apostar_em:'1',
-                  martingale:'2',
-              }); 
-
-      }else if(tipoJogo.nome.includes('Aviator')){
-          //Estrategias futballstudio #################################
-          await EstrategiaAviator.create({
-          bot_id:tipoJogo.id,
-          nome:'Sequencia ROSA,ROXO,AZUL',
-          sequencia:'ROSA,ROXO,AZUL',
-          apostar_em:'1.5',
-          martingale:'2',
-          }); 
-      
-       
-      }else if(tipoJogo.nome.includes('Miner')){
-          await EstrategiaMiner.create({
-              bot_id:tipoJogo.id,
-              espera:2,
-              tentativas:2,
-              minas_a:2,
-              minas_b:2,
-              entrada_a:2,
-              entrada_b:2,
-          }); 
-        
-      }else if(tipoJogo.nome.includes('Fantan')){
-          //Estrategias fantans
-          await EstrategiaFantan.create({
-              bot_id:tipoJogo.id,
-              nome:'Sequencia 5 preto',
-              sequencia:'2,2,2,2,2,2',
-              apostar_em:'1',
-              martingale:'2',
-          }); 
-
-          await EstrategiaFantan.create({
-              bot_id:tipoJogo.id,
-              nome:'Sequencia 5 vermelho',
-              sequencia:'1,1,1,1,1,1',
-              apostar_em:'2',
-              martingale:'2',
-          }); 
-
-
-          await EstrategiaFantan.create({
-              bot_id:tipoJogo.id,
-              nome:'Alternancia 5 preto',
-              sequencia:'1,2,1,2,1',
-              apostar_em:'2',
-              martingale:'2',
-          }); 
-
-          await EstrategiaFantan.create({
-              bot_id:tipoJogo.id,
-              nome:'Dois em dois vermelho',
-              sequencia:'1,1,2,2,1',
-              apostar_em:'1',
-              martingale:'2',
-          }); 
-          
-      }else if(tipoJogo.nome.includes('FutbalStudio')){
-          //Estrategias futballstudio #################################
-          await EstrategiaFutbalStudio.create({
-          bot_id:tipoJogo.id,
-          nome:'Sequencia 5 preto',
-          sequencia:'V,V,C,C,E,E',
-          apostar_em:'V',
-          martingale:'2',
-         }); 
-   
-      }else if(tipoJogo.nome.includes('Penalty')){
-          await EstrategiaPenalty.create({
-              bot_id:tipoJogo.id,
-              esperar:2,
-              tentativa:2,
-          }); 
-       
-      }else if(tipoJogo.nome.includes("CPremium")){
-              
-          const crash = await EstrategiaCrashPremium.create({
-              bot_id:tipoJogo.id,
-              nome:"Estratégia Padrão",
-              sair:0,
-              aguardar:7,
-              notificar:3,
-              lista:4,
-              sair_em:5
-          }); 
-      
-      }else if(tipoJogo.nome.includes("DPremium")){
-          const doublepremium = await EstrategiaDoublePremium.create({
-              bot_id:tipoJogo.id,
-              nome:"Estratégia Padrão",
-              aguardar:7,
-              intervalo:3,
-              lista:4,
-          }); 
-          
-      }else if(tipoJogo.nome == "Roleta"){
-      
-          let rouletes_name=[
-              "Super Spin Roulette",
-              "bet365 Roulette",
-              "bet365 Dutch Roulette",
-              "Who Wants To Be a Millionaire Roulette",
-              "Mega Fire Blaze Roulette Live",
-              "Quantum Roulette Live",
-              "Roulette",
-              "Age Of The Gods Bonus Roulette",
-              "Football Roulette",
-              "Hindi Roulette",
-              "Speed Roulette",
-              "Greek  Roulette",
-              "Turkish Roulette",
-              "Roleta Brasileira",
-              "Quantum Auto Roulette",
-              "Speed Auto Roulette",
-              "Prestige Roulette",
-              "American Roulette",
-              "Spread Bet Roulette",
-              "Deutsches Roulette",
-              "Auto Roulette",
-              "Greek Quantum Roulette",
-              "UK Roulette",
-              "Quantum Roulette Italiana",
-              "Triumph Roulette",
-              "Roulette Italiana",
-          ]
-
-          rouletes_name.forEach( async (res) =>{
-
-              await EstrategiaRoleta.create({
-                  bot_id:tipoJogo.id,
-                  nome_roleta:res,
-                  sequencia_cor:11,
-                  sequencia_maior_menor:11,
-                  sequencia_par_impar:11,
-                  sequencia_duzias:8,
-                  sequencia_colunas:8,
-                  martingale:2,
-                  status:1,
-              }); 
-
-          })
-
-
-      }else{
-      //Estrategia Crash
-          await EstrategiaCrash.create({
-              bot_id:grupo.id,
-              nome:'Jogada 1.5',
-              sequencia:3,
-              valor_a:1,
-              valor_b:1.5,
-              apostar_em:1.5,
-              martingale:2,
-          });
-          
-          await EstrategiaCrash.create({
-              bot_id:grupo.id,
-              nome:'Jogada 2.0',
-              sequencia:8,
-              valor_a:1,
-              valor_b:1.5,
-              apostar_em:2,
-              martingale:2,
-          }); 
-     
-      }
-
         }else if(tipoJogo.nome.includes("DPremium")){
           const doublepremium = await EstrategiaDoublePremium.create({
               bot_id:tipoJogo.id,

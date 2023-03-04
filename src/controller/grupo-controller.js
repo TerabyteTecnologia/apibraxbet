@@ -192,7 +192,7 @@ async store(req,res){
                 });
             })
 
-        }else if(tipoJogo.nome.includes('Miner')){
+        }else if(tipoJogo.nome.includes('Mines')){
               
             tipoJogo.mensagensminer.map(async res=>{
                 await MsgMiner.create({
@@ -266,7 +266,7 @@ async store(req,res){
                 }); 
             })
 
-        }else if(tipoJogo.nome.includes('FutbalStudio')){
+        }else if(tipoJogo.nome.includes('FootBallStudio') || tipoJogo.nome.includes('FootballStudioDice')){
             
             tipoJogo.mensagensfootballstudio.map(async res=>{
                 await MsgFutballStudio.create({
@@ -852,6 +852,7 @@ async bucaGrupoRodrigo(req,res){
     const { id } = req.params;
        const grupo = await Grupo.findByPk(id,
         {include:[
+            {association:"usuario"},
             {association:"mensagensfutballstudio"},
             {association:"mensagenscrash"},
             {association:"mensagensdouble"},
