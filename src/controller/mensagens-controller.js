@@ -714,14 +714,14 @@ async updatePenalty(req,res){
         tardefim,
         noiteinicio,
         noiteifim,
-        statusmensagem,
+
        
     } = req.body;
         let contract = new ValidationContract();
         contract.isRequired(atencao, 'atencao', 'O cofirmacao é obrigatorio');
         contract.isRequired(cofirmacao, 'cofirmacao', 'O cofirmacao é obrigatorio');
         contract.isRequired(tipo, 'cofirmacao', 'O cofirmacao é obrigatorio');
-        contract.isRequired(statusmensagem, 'statusmensagem', 'O cofirmacao é obrigatorio');
+
         
 
         // Se os dados forem inválidos
@@ -777,7 +777,7 @@ async updatePenalty(req,res){
                 tardefim,
                 noiteinicio,
                 noiteifim,
-                statusmensagem,
+ 
     
              }); 
         }else{
@@ -785,7 +785,7 @@ async updatePenalty(req,res){
                 bot_id: id,
                 atencao,
                 cofirmacao,
-                statusmensagem
+
     
              }); 
         }
@@ -815,14 +815,14 @@ async updatePenalty(req,res){
             tardefim,
             noiteinicio,
             noiteifim,
-            statusmensagem,
+
            
     }); 
      }else{
        const msgpenalty = await msgOld.update({
             atencao,
             cofirmacao,
-            statusmensagem,
+
            
     }); 
    }
