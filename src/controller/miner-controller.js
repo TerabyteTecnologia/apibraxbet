@@ -233,6 +233,8 @@ try{
         }
   
     const {
+        abertura,
+        fechamento,
         atencao,
         confirmacao,
         parcial,
@@ -298,17 +300,8 @@ try{
             if(tipo == 1){
             const msgCrash = await MinerMensagem.create({
                 bot_id: id,
-                atencao,
-                confirmacao,
-                parcial,
-                final,
-                padrao_entrada,
-                padrao_nao_entrada,
-                statusparcialfinal,
-            });
-        }else{
-            const msgCrash = await MinerMensagem.create({
-                bot_id: id,
+                abertura,
+                fechamento,
                 atencao,
                 confirmacao,
                 parcial,
@@ -326,6 +319,17 @@ try{
                 noiteinicio,
                 noiteifim,
             });
+        }else{
+            const msgCrash = await MinerMensagem.create({
+                bot_id: id,
+                atencao,
+                confirmacao,
+                parcial,
+                final,
+                padrao_entrada,
+                padrao_nao_entrada,
+                statusparcialfinal,
+            });
         }
         
             return res.status(201).json({
@@ -337,6 +341,8 @@ try{
 
         if(tipo == 1){
         const msgCrash = await msgOld.update({
+            abertura,
+            fechamento,
             atencao,
             confirmacao,
             parcial,
@@ -358,8 +364,6 @@ try{
         }); 
         }else{
             const msgCrash = await msgOld.update({
-                atencao,
-                confirmacao,
                 parcial,
                 final,
                 padrao_entrada,

@@ -80,6 +80,8 @@
     
     
         const {
+            abertura,
+            fechamento,
             atencao,
             cofirmacao,
             win,
@@ -153,6 +155,8 @@
             if(tipo == 1){
         await MsgFantan.create({
                 bot_id: id,
+                abertura,
+                fechamento,
                 atencao,
                 cofirmacao,
                 win,
@@ -206,6 +210,8 @@
 
         if(tipo == 1){
         const msgDoubleRes = await msgOld.update({
+                abertura,
+                fechamento,
                 atencao,
                 cofirmacao,
                 win,
@@ -329,6 +335,8 @@
     
     
         const {
+            abertura,
+            fechamento,
             atencao,
             cofirmacao,
             win,
@@ -400,6 +408,8 @@
             if(tipo == 1){
                 await MsgAviator.create({
                     bot_id: id,
+                    abertura,
+                    fechamento,
                     atencao,
                     cofirmacao,
                     win,
@@ -453,6 +463,8 @@
 
     if(tipo ==1){
     await msgOld.update({
+            abertura,
+            fechamento,
             atencao,
             cofirmacao,
             win,
@@ -572,6 +584,8 @@
             }
       
         const {
+            abertura,
+            fechamento,
             atencao,
             confirmacao,
             parcial,
@@ -648,6 +662,8 @@
             }else{
                 const msgCrash = await MinerMensagem.create({
                     bot_id: id,
+                    abertura,
+                    fechamento,
                     atencao,
                     confirmacao,
                     parcial,
@@ -676,6 +692,8 @@
     
             if(tipo == 1){
             const msgCrash = await msgOld.update({
+                abertura,
+                fechamento,
                 atencao,
                 confirmacao,
                 parcial,
@@ -787,6 +805,8 @@
     
     
         const {
+            abertura,
+            fechamento,
             atencao,
             cofirmacao,
             win,
@@ -817,7 +837,7 @@
             contract.isRequired(win, 'win', 'O win é obrigatorio');
             contract.isRequired(loss, 'loss', 'O loss é obrigatorio');
             contract.isRequired(martingale, 'martingale', 'O martingale é obrigatorio');
-            contract.isRequired(tipo, 'tipo', 'O cofirmacao é obrigatorio');
+            contract.isRequired(tipo, 'tipo', 'O tipo é obrigatorio');
 
             // Se os dados forem inválidos
             if (!contract.isValid()) {
@@ -858,6 +878,8 @@
             if(tipo == 1){
                 await MsgFutballStudio.create({
                     bot_id: id,
+                    abertura,
+                    fechamento,
                     atencao,
                     cofirmacao,
                     win,
@@ -911,6 +933,8 @@
 
     if(tipo ==1){
     await msgOld.update({
+            abertura,
+            fechamento,
             atencao,
             cofirmacao,
             win,
@@ -1038,6 +1062,8 @@
 
         
         const {
+            abertura,
+            fechamento,
             atencao,
             cofirmacao,
             tipo,
@@ -1050,16 +1076,13 @@
             tardefim,
             noiteinicio,
             noiteifim,
-            statusmensagem,
         
         } = req.body;
             let contract = new ValidationContract();
             contract.isRequired(atencao, 'atencao', 'O cofirmacao é obrigatorio');
             contract.isRequired(cofirmacao, 'cofirmacao', 'O cofirmacao é obrigatorio');
             contract.isRequired(tipo, 'tipo', 'O tipo é obrigatorio');
-            contract.isRequired(statusmensagem, 'statusmensagem', 'O cofirmacao é obrigatorio');
             
-
             // Se os dados forem inválidos
             if (!contract.isValid()) {
                 return res.status(200).send({
@@ -1100,6 +1123,8 @@
             if(tipo == 1){
                 const msgpenalty = await MsgPenalty.create({
                     bot_id: id,
+                    abertura,
+                    fechamento,
                     atencao,
                     cofirmacao,
                     statusmanha,
@@ -1111,7 +1136,7 @@
                     tardefim,
                     noiteinicio,
                     noiteifim,
-                    statusmensagem,
+                    tipo,
         
                 }); 
             }else{
@@ -1119,7 +1144,7 @@
                     bot_id: id,
                     atencao,
                     cofirmacao,
-                    statusmensagem
+                    tipo,
         
                 }); 
             }
@@ -1136,6 +1161,8 @@
 
         if(tipo == 1){
             const msgpenalty = await msgOld.update({
+                abertura,
+                fechamento,
                 atencao,
                 cofirmacao,
                 statusmanha,
@@ -1147,14 +1174,14 @@
                 tardefim,
                 noiteinicio,
                 noiteifim,
-                statusmensagem,
+                tipo,
             
         }); 
         }else{
         const msgpenalty = await msgOld.update({
                 atencao,
                 cofirmacao,
-                statusmensagem,
+                tipo,
             
         }); 
     }

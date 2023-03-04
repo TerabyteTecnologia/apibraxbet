@@ -5,6 +5,8 @@ class dtb_mensagem_padrao_fantan extends Model {
   static init(sequelize) {
     super.init({
       bot_id:DataTypes.INTEGER,
+      abertura:DataTypes.TEXT,
+      fechamento:DataTypes.TEXT,
       atencao:DataTypes.TEXT,
       cofirmacao:DataTypes.TEXT,
       win:DataTypes.TEXT,

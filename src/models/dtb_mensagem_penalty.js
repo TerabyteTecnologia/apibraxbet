@@ -5,6 +5,8 @@ class dtb_mensagem_penalty extends Model {
   static init(sequelize) {
     super.init({
       bot_id:DataTypes.INTEGER,
+      abertura:DataTypes.TEXT,
+      fechamento:DataTypes.TEXT,
       atencao:DataTypes.TEXT,
       cofirmacao:DataTypes.TEXT,
       parcial:DataTypes.TEXT,

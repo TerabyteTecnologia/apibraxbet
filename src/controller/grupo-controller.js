@@ -156,12 +156,14 @@ async store(req,res){
                     final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
                 
             }); 
-        }else if(tipoJogo.nome.includes('Aviator')){
+        }else if(tipoJogo.nome.includes('Aviator') || tipoJogo.nome.includes('Spaceman')){
             console.log(tipoJogo)
             tipoJogo.mensagensaviator.map(async res=>{
                
                 await MsgAviator.create({
                     bot_id: grupo.id,
+                    abertura:res.abertura,
+                    fechamento:res.fechamento,
                     atencao:res.atencao,
                     cofirmacao:res.cofirmacao,
                     win:res.win,
@@ -195,6 +197,8 @@ async store(req,res){
             tipoJogo.mensagensminer.map(async res=>{
                 await MsgMiner.create({
                     bot_id:grupo.id,
+                    abertura:res.abertura,
+                    fechamento:res.fechamento,
                     atencao:res.atencao,
                     confirmacao:res.confirmacao,
                     parcial:res.parcial,
@@ -226,6 +230,8 @@ async store(req,res){
 
                 await MsgFantan.create({
                     bot_id: grupo.id,
+                    abertura:res.abertura,
+                    fechamento:res.fechamento,
                     atencao: res.atencao,
                     
                     cofirmacao:res.cofirmacao,
@@ -265,6 +271,8 @@ async store(req,res){
             tipoJogo.mensagensfootballstudio.map(async res=>{
                 await MsgFutballStudio.create({
                     bot_id: grupo.id,
+                    abertura:res.abertura,
+                    fechamento:res.fechamento,
                     atencao:res.atencao,
                     cofirmacao:res.cofirmacao,
                     win:res.win,
@@ -301,6 +309,8 @@ async store(req,res){
 
                 await MsgPenalty.create({
                     bot_id: grupo.id,
+                    abertura:res.abertura,
+                    fechamento:res.fechamento,
                     atencao: res.atencao,
                     cofirmacao:res.cofirmacao,
 

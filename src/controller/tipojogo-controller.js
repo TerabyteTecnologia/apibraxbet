@@ -161,6 +161,8 @@ async store(req,res){
            //Mensagem futballstudio #################################
            await MsgAviator.create({
             bot_id: tipoJogo.id,
+            abertura:'⚠️ ATENÇÃO, Iniciaremos o envio dos sinais em breve Fique atento e proveita fechamento', 
+            fechamento:'Sinais encerrado \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP.Não perca esta oportunidade!',  
             atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
             
             cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
@@ -209,8 +211,10 @@ async store(req,res){
           }); 
 
           
-          await MsgMiner.create({
+        await MsgMiner.create({
             bot_id:tipoJogo.id,
+            abertura:'⚠️ ATENÇÃO, Iniciaremos o envio dos sinais em breve Fique atento e proveita fechamento', 
+            fechamento:'Sinais encerrado \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP.Não perca esta oportunidade!',  
             atencao:'⚠️ ATENÇÃO, possível entrada [ENTRADA] \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/crash">Crash</a>',
 
             confirmacao:'🔔 Entrada Confirmada 🔔 \n🎰 Blaze: <a href="https://blaze.com/pt/games/crash">Crash</a> \💰 Entrar após [ULTIMA_VELA] \n🚀 Auto retirar [ENTRADA]',
@@ -269,6 +273,10 @@ async store(req,res){
           //Mensagem fantan
           await MsgFantan.create({
                 bot_id: tipoJogo.id,
+                abertura:'⚠️ ATENÇÃO, Iniciaremos o envio dos sinais em breve Fique atento e proveita fechamento', 
+                fechamento:'Sinais encerrado \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP.Não perca esta oportunidade!',  
+                abertura:'⚠️ ATENÇÃO, Iniciaremos o envio dos sinais em breve Fique atento e proveita fechamento', 
+                fechamento:'Sinais encerrado \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP.Não perca esta oportunidade!',  
                 atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
                 
                 cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
@@ -318,6 +326,8 @@ async store(req,res){
               //Mensagem futballstudio #################################
               await MsgFutballStudio.create({
                 bot_id: tipoJogo.id,
+                abertura:'⚠️ ATENÇÃO, Iniciaremos o envio dos sinais em breve Fique atento e proveita fechamento', 
+                fechamento:'Sinais encerrado \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP.Não perca esta oportunidade!',  
                 atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
                 
                 cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
@@ -362,6 +372,8 @@ async store(req,res){
 
           const msgPenalty = await MsgPenalty.create({
             bot_id:tipoJogo.id,
+            abertura:'⚠️ ATENÇÃO, Iniciaremos o envio dos sinais em breve Fique atento e proveita fechamento', 
+            fechamento:'Sinais encerrado \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP.Não perca esta oportunidade!',  
             atencao: '⚠️ ATENÇÃO, possível entrada [ENTRADA] \n\n⌚️ Aguarde a confirmação  \n\n🎰 BraxBet: [LINK_JOGO]  \n\n[LINK_CADASTRE_AQUI]',
             cofirmacao:'🔔 Entrada Confirmada 🔔 \n\n🎰 BraxBet: <a href="https://braxbet.com/virtual-game/Crash_game_Aviator">Aviator</a> \n\n💰 Entrar após [ULTIMA_VELA]  \n\n🚀 Auto retirar [ENTRADA].0x',
             tipomensagem:1,

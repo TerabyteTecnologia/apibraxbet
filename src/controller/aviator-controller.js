@@ -383,6 +383,8 @@ async updateMensagemaviator(req,res){
  
   
     const {
+        abertura,
+        fechamento,
         atencao,
         cofirmacao,
         win,
@@ -414,6 +416,8 @@ async updateMensagemaviator(req,res){
         contract.isRequired(loss, 'loss', 'O loss é obrigatorio');
         contract.isRequired(martingale, 'martingale', 'O martingale é obrigatorio');
         contract.isRequired(tipo, 'tipo', 'O cofirmacao é obrigatorio');
+        contract.isRequired(abertura, 'abertura', 'O abertura é obrigatorio');
+        contract.isRequired(fechamento, 'fechamento', 'O fechamento é obrigatorio');
 
         // Se os dados forem inválidos
         if (!contract.isValid()) {
@@ -454,6 +458,8 @@ async updateMensagemaviator(req,res){
         if(tipo == 1){
             await MsgAviator.create({
                 bot_id: id,
+                abertura,
+                fechamento,
                 atencao,
                 cofirmacao,
                 win,
@@ -480,6 +486,8 @@ async updateMensagemaviator(req,res){
         }else{
         const msgdouble = await MsgAviator.create({
             bot_id: id,
+            abertura,
+            fechamento,
             atencao,
             cofirmacao,
             win,
@@ -507,6 +515,8 @@ async updateMensagemaviator(req,res){
 
    if(tipo ==1){
   await msgOld.update({
+        abertura,
+        fechamento,
         atencao,
         cofirmacao,
         win,
@@ -534,6 +544,8 @@ async updateMensagemaviator(req,res){
    }
    else{
     const msgDoubleRes = await msgOld.update({
+        abertura,
+        fechamento,
         atencao,
         cofirmacao,
         win,

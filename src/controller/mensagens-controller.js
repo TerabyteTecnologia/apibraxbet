@@ -171,6 +171,8 @@ async updatefantan(req,res){
  
   
     const {
+        abertura,
+        fechamento,
         atencao,
         cofirmacao,
         win,
@@ -203,6 +205,7 @@ async updatefantan(req,res){
         contract.isRequired(loss, 'loss', 'O loss é obrigatorio');
         contract.isRequired(martingale, 'martingale', 'O martingale é obrigatorio');
         contract.isRequired(tipo, 'tipo', 'O tipo é obrigatorio');
+         
 
         // Se os dados forem inválidos
         if (!contract.isValid()) {
@@ -244,6 +247,8 @@ async updatefantan(req,res){
         if(tipo == 1){
        await MsgFantan.create({
             bot_id: id,
+            abertura,
+            fechamento,
             atencao,
             cofirmacao,
             win,
@@ -297,6 +302,8 @@ async updatefantan(req,res){
 
     if(tipo == 1){
      const msgDoubleRes = await msgOld.update({
+            abertura,
+            fechamento,
             atencao,
             cofirmacao,
             win,
@@ -427,6 +434,8 @@ async updateFutbalStuido(req,res){
  
   
     const {
+        abertura,
+        fechamento,
         atencao,
         cofirmacao,
         win,
@@ -458,6 +467,7 @@ async updateFutbalStuido(req,res){
         contract.isRequired(loss, 'loss', 'O loss é obrigatorio');
         contract.isRequired(martingale, 'martingale', 'O martingale é obrigatorio');
         contract.isRequired(tipo, 'tipo', 'O cofirmacao é obrigatorio');
+
 
         // Se os dados forem inválidos
         if (!contract.isValid()) {
@@ -498,6 +508,8 @@ async updateFutbalStuido(req,res){
         if(tipo == 1){
             await MsgFutballStudio.create({
                 bot_id: id,
+                abertura,
+                fechamento,
                 atencao,
                 cofirmacao,
                 win,
@@ -551,6 +563,8 @@ async updateFutbalStuido(req,res){
 
    if(tipo ==1){
   await msgOld.update({
+        abertura,
+        fechamento,
         atencao,
         cofirmacao,
         win,
@@ -573,7 +587,6 @@ async updateFutbalStuido(req,res){
         tardefim,
         noiteinicio,
         noiteifim,
-     
     
 }); 
    }
@@ -593,7 +606,6 @@ async updateFutbalStuido(req,res){
         statusparcialfinal,
         statuscoberturabranco,
      
-    
 }); 
    }
 
@@ -688,6 +700,8 @@ async updatePenalty(req,res){
 
     
     const {
+        abertura,
+        fechamento,
         atencao,
         cofirmacao,
         tipo,
@@ -750,6 +764,8 @@ async updatePenalty(req,res){
         if(tipo == 1){
             const msgpenalty = await MsgPenalty.create({
                 bot_id: id,
+                abertura,
+                fechamento,
                 atencao,
                 cofirmacao,
                 statusmanha,
@@ -786,6 +802,8 @@ async updatePenalty(req,res){
 
      if(tipo == 1){
         const msgpenalty = await msgOld.update({
+            abertura,
+            fechamento,
             atencao,
             cofirmacao,
             statusmanha,
@@ -801,7 +819,7 @@ async updatePenalty(req,res){
            
     }); 
      }else{
-    const msgpenalty = await msgOld.update({
+       const msgpenalty = await msgOld.update({
             atencao,
             cofirmacao,
             statusmensagem,

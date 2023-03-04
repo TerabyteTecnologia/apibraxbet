@@ -5,6 +5,8 @@ class dtb_mensagem_miner extends Model {
   static init(sequelize) {
     super.init({
       bot_id:DataTypes.INTEGER,
+      abertura:DataTypes.TEXT,
+      fechamento:DataTypes.TEXT,
       atencao:DataTypes.TEXT,
       confirmacao:DataTypes.TEXT,
       parcial:DataTypes.TEXT,
