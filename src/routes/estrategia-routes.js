@@ -77,4 +77,7 @@ router.put('/updatestatusaviator/:id/:idbot',authService.authorize,controllerAvi
 router.put('/updateminer/:id',authService.authorize,controllerMiner.updadeMiner);
 router.get('/showminer/:id',authService.authorize,controllerMiner.showEstrategia);
 
+router.put('/updatewinloss',authService.authorizeRodrigo,controller.updatewinloss);
+
+
 module.exports =router;

@@ -11,6 +11,8 @@ const Grupo = require('../models/dtb_bots');
  const ValidationContract = require("../validator/fluent-validators");
  const authService = require('../services/auth-services');
  const { Op } = require("sequelize");
+const { updatewinlossEstrategias } = require('../services/helper-creater');
+
 module.exports = {
  
 //Double  ############################################################################
@@ -1837,6 +1839,42 @@ async mudastatusroleta(req,res){
             error:err.message
         })
     }
+},
+
+
+
+async updatewinloss(req,res){
+         
+    try{
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+      
+        const {nome,win,loss,id} = req.body;
+        let contract = new ValidationContract();
+        contract.isRequired(nome, 'nome', 'O Nome é obrigatorio');
+        contract.isRequired(win, 'win', 'O win é obrigatorio');
+        contract.isRequired(loss, 'loss', 'O loss é obrigatorio');
+        contract.isRequired(id, 'id', 'O id é obrigatorio');
+    
+
+        // Se os dados forem inválidos
+        if (!contract.isValid()) {
+            return res.status(200).send({
+            error:contract.errors()
+            })
+        };
+
+        await updatewinlossEstrategias(nome,win,loss,id)
+      
+    return res.status(201).json({
+        msg:"Jogo Atualizado com sucesso",
+
+    })
+}
+catch(err){
+    return res.status(200).send({
+        error:err.message
+    })
+}
 },
 
 

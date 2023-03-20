@@ -68,12 +68,13 @@ async store(req,res){
         }
 
 
-        const {nome,coleta_dados,nome_tabela,caminho_robo,caminho_robo_adm,link_acesso,tipo_jogo} = req.body;
+        const {nome,coleta_dados,nome_tabela,caminho_robo,caminho_robo_adm,link_acesso,tipo_jogo,descricao} = req.body;
         let contract = new ValidationContract();
         contract.isRequired(nome, 'nome', 'O Nome é obrigatorio');
         contract.isRequired(caminho_robo, 'caminho_robo', 'O dado é obrigatorio');
         contract.isRequired(caminho_robo_adm, 'caminho_robo_adm', 'O dado é obrigatorio');
         contract.isRequired(link_acesso, 'link_acesso', 'O dado é obrigatorio');
+        contract.isRequired(descricao, 'descricao', 'A descricao é obrigatorio');
 
         // Se os dados forem inválidos
         if (!contract.isValid()) {
@@ -82,6 +83,7 @@ async store(req,res){
             })
         };
         const tipoJogo = await TipoJogo.create({
+            descricao,
             nome,
             caminho_robo,
             caminho_robo_adm,
@@ -145,7 +147,7 @@ async store(req,res){
               }); 
 
          
-        }else if(tipoJogo.nome.includes('Aviator') || tipoJogo.nome.includes('Spaceman')){
+        }else if(tipoJogo.nome.includes('Crash')){
            await createAviator(tipoJogo.id)
       
         }else if(tipoJogo.nome.includes('Mines')){
@@ -158,7 +160,7 @@ async store(req,res){
           await createFantan(tipoJogo.id)
           
    
-        }else if(tipoJogo.nome.includes('FootBallStudio') || tipoJogo.nome.includes('FootballStudioDice')){
+        }else if(tipoJogo.nome.includes('FootBallStudio')){
           //Estrategias futballstudio #################################
           await createFootBallStudio(tipoJogo.id)
    

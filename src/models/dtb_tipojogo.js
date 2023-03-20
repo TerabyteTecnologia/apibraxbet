@@ -5,6 +5,7 @@ class dtb_tipojogo extends Model {
   static init(sequelize) {
     super.init({
       nome:DataTypes.STRING,
+      descricao:DataTypes.STRING,
       win:DataTypes.INTEGER,
       loss:DataTypes.INTEGER,
       caminho_robo_adm:DataTypes.STRING,

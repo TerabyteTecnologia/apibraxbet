@@ -156,7 +156,7 @@ async store(req,res){
                     final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
                 
             }); 
-        }else if(tipoJogo.nome.includes('Aviator') || tipoJogo.nome.includes('Spaceman')){
+        }else if(tipoJogo.nome.includes('Crash')){
             console.log(tipoJogo)
             tipoJogo.mensagensaviator.map(async res=>{
                
@@ -266,7 +266,7 @@ async store(req,res){
                 }); 
             })
 
-        }else if(tipoJogo.nome.includes('FootBallStudio') || tipoJogo.nome.includes('FootballStudioDice')){
+        }else if(tipoJogo.nome.includes('FootBallStudio')){
             
             tipoJogo.mensagensfootballstudio.map(async res=>{
                 await MsgFutballStudio.create({

@@ -7,6 +7,8 @@ class dtb_estrategia_penalty extends Model {
       bot_id:DataTypes.INTEGER,
       esperar:DataTypes.FLOAT,
       tentativa:DataTypes.INTEGER,
+      win:DataTypes.INTEGER,
+      loss:DataTypes.INTEGER,
     }, {
       sequelize
     });

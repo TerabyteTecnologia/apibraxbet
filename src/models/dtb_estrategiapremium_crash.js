@@ -10,6 +10,8 @@ class dtb_estrategiapremium_crash extends Model {
       notificar:DataTypes.INTEGER,
       lista:DataTypes.INTEGER,
       sair_em:DataTypes.INTEGER,
+      win:DataTypes.INTEGER,
+      loss:DataTypes.INTEGER,
     }, {
       sequelize
     });

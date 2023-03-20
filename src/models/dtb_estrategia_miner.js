@@ -11,6 +11,8 @@ class dtb_estrategia_miner extends Model {
       minas_b:DataTypes.INTEGER,
       entrada_a:DataTypes.INTEGER,
       entrada_b:DataTypes.INTEGER,
+      win:DataTypes.INTEGER,
+      loss:DataTypes.INTEGER,
     }, {
       sequelize
     });

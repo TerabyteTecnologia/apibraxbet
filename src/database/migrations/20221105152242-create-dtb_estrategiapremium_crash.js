@@ -38,6 +38,14 @@ module.exports = {
       sair_em: {
           type: Sequelize.INTEGER,
       },
+      win: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
+      loss: {
+        type: Sequelize.INTEGER,
+        defaultValue: 0,
+      },
       
       created_at: {
         type: Sequelize.DATE,

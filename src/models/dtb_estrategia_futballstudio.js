@@ -10,7 +10,8 @@ class dtb_estrategia_futballstudio extends Model {
       apostar_em:DataTypes.STRING,
       martingale:DataTypes.INTEGER,
       status:DataTypes.STRING,
-    
+      win:DataTypes.INTEGER,
+      loss:DataTypes.INTEGER,
     }, {
       sequelize
     });

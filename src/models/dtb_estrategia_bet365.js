@@ -13,6 +13,8 @@ class dtb_estrategia_bet365 extends Model {
       sequencia_colunas:DataTypes.INTEGER,
       martingale:DataTypes.INTEGER,
       status:DataTypes.INTEGER,
+      win:DataTypes.INTEGER,
+      loss:DataTypes.INTEGER,
     }, {
       sequelize
     });

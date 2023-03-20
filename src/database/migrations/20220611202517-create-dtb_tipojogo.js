@@ -13,6 +13,10 @@ module.exports = {
           type: Sequelize.STRING(200),
           allowNull: false,
       },
+      descricao: {
+        type: Sequelize.STRING(200),
+        allowNull: false,
+    },
       win: {
         type: Sequelize.INTEGER,
         defaultValue: 0,

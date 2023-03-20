@@ -371,5 +371,121 @@ module.exports ={
             tipomensagem:2,
         }); 
 
+    },
+
+    async updatewinlossEstrategias(tipoJogoName,win,loss,id){
+        
+         ///Monta as estrategias e mensagem ;;;;; melhorar isso atravazes de utils
+         console.log('tipoJogoName',tipoJogoName)
+          if(tipoJogoName.includes('Crash')){
+            var aviator = await EstrategiaAviator.findOne({where:{ id:id }});
+            console.log('aviator',aviator)
+            await aviator.update({
+                win:win,
+                loss:loss
+             }); 
+          }else if(tipoJogoName.includes('Mines')){
+            var miner = await EstrategiaMiner.findOne({where:{ id:id }});
+            await miner.update({
+                win:win,
+                loss:loss
+             }); 
+          }else if(tipoJogoName.includes('Fantan')){
+            var fantan = await EstrategiaFantan.findOne({where:{ id:id }});
+            await fantan.update({
+                win:win,
+                loss:loss
+             })
+          }else if(tipoJogoName.includes('FootBallStudio')){
+            var footBallEstudio = await EstrategiaFutbalStudio.findOne({where:{ id:id }});
+            await footBallEstudio.update({
+                win:win,
+                loss:loss
+             })
+
+          }else if(tipoJogoName.includes('Penalty')){
+            var penalty = await EstrategiaPenalty.findOne({where:{ id:id }});
+            await penalty.update({
+                win:win,
+                loss:loss
+             })
+         
+          }else if(tipoJogoName.includes("CPremium")){             
+           //implementar
+          }else if(tipoJogoName == "Roleta"){
+        
+                    let rouletes_name=[
+                            "Super Spin Roulette",
+                            "bet365 Roulette",
+                            "bet365 Dutch Roulette",
+                            "Who Wants To Be a Millionaire Roulette",
+                            "Mega Fire Blaze Roulette Live",
+                            "Quantum Roulette Live",
+                            "Roulette",
+                            "Age Of The Gods Bonus Roulette",
+                            "Football Roulette",
+                            "Hindi Roulette",
+                            "Speed Roulette",
+                            "Greek  Roulette",
+                            "Turkish Roulette",
+                            "Roleta Brasileira",
+                            "Quantum Auto Roulette",
+                            "Speed Auto Roulette",
+                            "Prestige Roulette",
+                            "American Roulette",
+                            "Spread Bet Roulette",
+                            "Deutsches Roulette",
+                            "Auto Roulette",
+                            "Greek Quantum Roulette",
+                            "UK Roulette",
+                            "Quantum Roulette Italiana",
+                            "Triumph Roulette",
+                            "Roulette Italiana",
+                        ]
+  
+            rouletes_name.forEach( async (res) =>{
+  
+                await EstrategiaRoleta.create({
+                    bot_id:tipoJogo.id,
+                    nome_roleta:res,
+                    sequencia_cor:11,
+                    sequencia_maior_menor:11,
+                    sequencia_par_impar:11,
+                    sequencia_duzias:8,
+                    sequencia_colunas:8,
+                    martingale:2,
+                    status:1,
+                }); 
+  
+            })
+  
+          
+            
+            
+          }else{
+            //Estrategia Crash
+            await EstrategiaCrash.create({
+                bot_id:grupo.id,
+                nome:'Jogada 1.5',
+                sequencia:3,
+                valor_a:1,
+                valor_b:1.5,
+                apostar_em:1.5,
+                martingale:2,
+            });
+            
+            await EstrategiaCrash.create({
+                bot_id:grupo.id,
+                nome:'Jogada 2.0',
+                sequencia:8,
+                valor_a:1,
+                valor_b:1.5,
+                apostar_em:2,
+                martingale:2,
+            }); 
+        
+          }
+  
     }
+
 }
