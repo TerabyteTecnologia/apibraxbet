@@ -4,26 +4,23 @@ require('dotenv').config();
  const TipoJogo = require('../models/dtb_tipojogo');
  const EstrategiaDouble = require('../models/dtb_estrategia_double');
  const EstrategiaFantan = require('../models/dtb_estrategia_fantan');
- const EstrategiaFutbalStudio = require('../models/dtb_estrategia_futballstudio');
- const EstrategiaAviator = require('../models/dtb_estrategia_aviator');
- const EstrategiaPenalty = require('../models/dtb_estrategia_penalty');
+
+
  const EstrategiaCrash = require('../models/dtb_estrategia_crash');
  const EstrategiaCrashPremium = require('../models/dtb_estrategiapremium_crash');
  const EstrategiaDoublePremium= require('../models/dtb_estrategiapremium_double');
  const EstrategiaRoleta = require('../models/dtb_estrategia_bet365');
- const EstrategiaMiner = require('../models/dtb_estrategia_miner');
+
 
  const MsgFantan = require('../models/dtb_mensagem_padrao_fantan');
- const MsgAviator = require('../models/dtb_mensagem_padrao_aviator');
- const MsgMiner = require('../models/dtb_mensagem_padrao_miner');
- const MsgFutballStudio = require('../models/dtb_mensagem_padrao_futballstudio');
- const MsgPenalty = require('../models/dtb_mensagem_padrao_penalty');
+
 
 
  const pm2 = require('pm2')
  const ValidationContract = require("../validator/fluent-validators");
 
  const authService = require('../services/auth-services');
+const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan } = require('../services/helper-creater');
 
 module.exports = {
  
@@ -149,242 +146,24 @@ async store(req,res){
 
          
         }else if(tipoJogo.nome.includes('Aviator') || tipoJogo.nome.includes('Spaceman')){
-          //Estrategias futballstudio #################################
-           await EstrategiaAviator.create({
-            bot_id:tipoJogo.id,
-            nome:'Sequencia ROSA,ROXO,AZUL',
-            sequencia:'ROSA,ROXO,AZUL',
-            apostar_em:'1.5',
-            martingale:'2',
-           }); 
-
-           //Mensagem futballstudio #################################
-           await MsgAviator.create({
-            bot_id: tipoJogo.id,
-            abertura:'⚠️ ATENÇÃO, Iniciaremos o envio dos sinais em breve Fique atento e proveita fechamento', 
-            fechamento:'Sinais encerrado \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP.Não perca esta oportunidade!',  
-            atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-            
-            cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
-
-            
-            win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-            
-            loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-
-            martingale:'🔁 [NUMERO]º Martingale!',
-
-            branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑 Empate 🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-            parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-            final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-            tipomensagem:1,
-           });
-
-           await MsgAviator.create({
-            bot_id: tipoJogo.id,
-            atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-            
-            cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
-
-            
-            win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-            
-            loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-
-            martingale:'🔁 [NUMERO]º Martingale!',
-
-            branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑 Empate 🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-            parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-            final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-            tipomensagem:2,
-           });  
+           await createAviator(tipoJogo.id)
       
         }else if(tipoJogo.nome.includes('Mines')){
-          await EstrategiaMiner.create({
-              bot_id:tipoJogo.id,
-              espera:2,
-              tentativas:2,
-              minas_a:2,
-              minas_b:2,
-              entrada_a:2,
-              entrada_b:2,
-          }); 
 
-          
-        await MsgMiner.create({
-            bot_id:tipoJogo.id,
-            abertura:'Iniciaremos o envio dos sinais em breve. \nFique atento e proveita.', 
-            fechamento:'Sinais encerrados \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP. \nNão perca esta oportunidade!',  
-            atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 BraxBet: [LINK_JOGO] \n\n🌟🌟🌟 [LINK_CADASTRE_AQUI] 🌟🌟🌟',
+            await createMiner(tipoJogo.id);
+       
 
-            confirmacao:'🟢🟢 Entrada Confirmada 🟢🟢||🔵🔵 Entrada Finalizada 🔵🔵|| \n💣 Selecione com [NUMERO_MINAS] minas \n🎯Entrada: \n[ENTRADA] \n⏱ Valido até as [HORARIO] \n🎲 Tentativas: [TENTATIVAS] \n🎰 BraxBet: [LINK_JOGO]',
-
-            parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-            final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-            tipomensagem:1,
-        }); 
-
-        await MsgMiner.create({
-            bot_id:tipoJogo.id,
-            atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 BraxBet: [LINK_JOGO] \n🌟🌟🌟 [LINK_CADASTRE_AQUI] 🌟🌟🌟',
-
-            confirmacao:'🟢🟢 Entrada Confirmada 🟢🟢||🔵🔵 Entrada Finalizada 🔵🔵|| \n💣 Selecione com [NUMERO_MINAS] minas \n🎯Entrada: \n[ENTRADA] \n⏱ Valido até as [HORARIO] \n🎲 Tentativas: [TENTATIVAS] \n🎰 BraxBet: [LINK_JOGO]',
-
-            parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-            final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-            tipomensagem:2,
-        }); 
         
         }else if(tipoJogo.nome.includes('Fantan')){
-          //Estrategias fantans
-          await EstrategiaFantan.create({
-              bot_id:tipoJogo.id,
-              nome:'Sequencia 5 preto',
-              sequencia:'2,2,2,2,2,2',
-              apostar_em:'1',
-              martingale:'2',
-          }); 
-
-          await EstrategiaFantan.create({
-              bot_id:tipoJogo.id,
-              nome:'Sequencia 5 vermelho',
-              sequencia:'1,1,1,1,1,1',
-              apostar_em:'2',
-              martingale:'2',
-          }); 
-
-
-          await EstrategiaFantan.create({
-              bot_id:tipoJogo.id,
-              nome:'Alternancia 5 preto',
-              sequencia:'1,2,1,2,1',
-              apostar_em:'2',
-              martingale:'2',
-          }); 
-
-          await EstrategiaFantan.create({
-              bot_id:tipoJogo.id,
-              nome:'Dois em dois vermelho',
-              sequencia:'1,1,2,2,1',
-              apostar_em:'1',
-              martingale:'2',
-          }); 
-
-          //Mensagem fantan
-          await MsgFantan.create({
-                bot_id: tipoJogo.id,
-                abertura:'⚠️ ATENÇÃO, Iniciaremos o envio dos sinais em breve Fique atento e proveita fechamento', 
-                fechamento:'Sinais encerrado \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP.Não perca esta oportunidade!',  
-                abertura:'⚠️ ATENÇÃO, Iniciaremos o envio dos sinais em breve Fique atento e proveita fechamento', 
-                fechamento:'Sinais encerrado \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP.Não perca esta oportunidade!',  
-                atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-                
-                cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
-
-                
-                win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                
-                loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-
-                martingale:'🔁 [NUMERO]º Martingale!',
-
-                branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑Green no Branco🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-                parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                tipomensagem:1,
-          }); 
-          //Mensagem fantan
-          await MsgFantan.create({
-                bot_id: tipoJogo.id,
-                atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-                
-                cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
-
-                
-                win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                
-                loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-
-                martingale:'🔁 [NUMERO]º Martingale!',
-
-                branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑Green no Branco🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-                parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                tipomensagem:2,
-          }); 
+          await createFantan(tipoJogo.id)
           
    
         }else if(tipoJogo.nome.includes('FootBallStudio') || tipoJogo.nome.includes('FootballStudioDice')){
           //Estrategias futballstudio #################################
-          await EstrategiaFutbalStudio.create({
-            bot_id:tipoJogo.id,
-            nome:'Sequencia 5 preto',
-            sequencia:'V,V,C,C,E,E',
-            apostar_em:'V',
-            martingale:'2',
-          }); 
-              //Mensagem futballstudio #################################
-              await MsgFutballStudio.create({
-                bot_id: tipoJogo.id,
-                abertura:'⚠️ ATENÇÃO, Iniciaremos o envio dos sinais em breve Fique atento e proveita fechamento', 
-                fechamento:'Sinais encerrado \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP.Não perca esta oportunidade!',  
-                atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-                
-                cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
-
-                
-                win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                
-                loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-
-                martingale:'🔁 [NUMERO]º Martingale!',
-
-                branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑 Empate 🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-                parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                tipomensagem:1,
-            });
-            await MsgFutballStudio.create({
-                bot_id: tipoJogo.id,
-                atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-                
-                cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
-
-                
-                win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                
-                loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-
-                martingale:'🔁 [NUMERO]º Martingale!',
-
-                branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑 Empate 🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-                parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                tipomensagem:2,
-            });  
+          await createFootBallStudio(tipoJogo.id)
    
         }else if(tipoJogo.nome.includes('Penalty')){
-          await EstrategiaPenalty.create({
-              bot_id:tipoJogo.id,
-              esperar:2,
-              tentativa:2,
-          }); 
-
-          const msgPenalty = await MsgPenalty.create({
-            bot_id:tipoJogo.id,
-            abertura:'Iniciaremos o envio dos sinais em breve. \nFique atento e proveita.', 
-            fechamento:'Sinais encerrados \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP. \nNão perca esta oportunidade!',  
-            atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 BraxBet: [LINK_JOGO] \n\n🌟🌟🌟 [LINK_CADASTRE_AQUI] 🌟🌟🌟',
-            cofirmacao:'🟢🟢 Entrada Confirmada 🟢🟢||🔵🔵 Entrada Finalizada 🔵🔵|| \n\n🎯Entrada: [BANDEIRAS] \n🔥Buscando: [VELA][ENTRADA] \n🎰 BraxBet [LINK_JOGO] \n\n🌟🌟🌟 [LINK_CADASTRE_AQUI] 🌟🌟🌟',
-            tipomensagem:1,
-        });
-        
-        const msgPenaltyvip = await MsgPenalty.create({
-            bot_id:tipoJogo.id,
-            atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 BraxBet: [LINK_JOGO] \n\n🌟🌟🌟 [LINK_CADASTRE_AQUI] 🌟🌟🌟',
-            cofirmacao:'🟢🟢 Entrada Confirmada 🟢🟢||🔵🔵 Entrada Finalizada 🔵🔵|| \n\n🎯Entrada: [BANDEIRAS] \n🔥Buscando: [VELA][ENTRADA] \n🎰 BraxBet [LINK_JOGO] \n\n🌟🌟🌟 [LINK_CADASTRE_AQUI] 🌟🌟🌟',
-            tipomensagem:2,
-        }); 
+            await createPenalty(tipoJogo.id)
        
         }else if(tipoJogo.nome.includes("CPremium")){             
           const crash = await EstrategiaCrashPremium.create({
