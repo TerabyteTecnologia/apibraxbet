@@ -17,10 +17,10 @@ router.put('/updatedouble/:id',authService.authorize,controller.updatedouble);
 router.put('/updatecrash/:id',authService.authorize,controller.updatecrash);
 router.put('/mudastatus/:id',authService.authorize,controller.mudastatus);
 
-//Premium routes 
-router.put('/updatepremium/:id',authService.authorize,controller.updatepremium);
-router.get('/showpremium/:id',authService.authorize,controller.showPremium);
 
+//CPremium
+router.get('/showcpremium/:id/tipo/:tipo',authService.authorize,controller.showCPremium);
+router.put('/updatecpremium/:id',authService.authorize,controller.updateCPremium);
 
 //Roleta Routes
 router.put('/updateroleta/:id',authService.authorize,controller.updateroleta);
@@ -74,5 +74,9 @@ router.put('/updatefutballstudiopadrao/:id',authService.authorize,controllerPara
 //Penalty
 router.get('/showpenaltypadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showPenalty);
 router.put('/updatepenaltypadrao/:id',authService.authorize,controllerParao.updatePenalty);
+
+//CPremium Padrao
+router.get('/showcpremiumpadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showCPremium);
+router.put('/updatecpremiumpadrao/:id',authService.authorize,controllerParao.updateCPremium);
 
 module.exports =router;

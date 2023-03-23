@@ -103,6 +103,7 @@ async store(req,res){
                  {association:"mensagensminer"},
                  {association:"mensagensfootballstudio"},
                  {association:"mensagenspenalty"},
+                 {association:"mensagenspremium"},
              ]},
      
          );
@@ -330,18 +331,32 @@ async store(req,res){
          
         }else if(tipoJogo.nome.includes("CPremium")){
                 
-            const msgPremium = await MsgPremium.create({
-                bot_id:grupo.id,
-                atencao:'🔔 Entrada confirmada 🔔 \n\nPOSSÍVEL [VELA_ALTA]️x \n\n[LISTA_HORARIO]  🚀 \n\nEntre [INTERVALO]',
+             tipoJogo.mensagenspremium.map(async res=>{
+                 await MsgPremium.create({
+                    bot_id:grupo.id,
+                    abertura:res.abertura,
+                    fechamento:res.fechamento,
+                    atencao:res.atencao,
+                    win:res.win,
+                    loss:res.loss,
+                    parcial:res.parcial,
+                    final:res.final,
+                    statusparcialfinal:res.statusparcialfinal,
+                    //padrao
+                    tipomensagem:res.tipomensagem,
+                    manhainicio:res.manhainicio,
+                    manhafim:res.manhafim,
+                    tardeinicio:res.tardeinicio,
+                    tardefim:res.tardefim,
+                    noiteinicio:res.noiteinicio,
+                    noiteifim:res.noiteifim,
+                    statusmanha:res.statusmanha,
+                    statustarde:res.statustarde,
+                    statusnoite:res.statusnoite,
+                 })
+             })
 
-                win:'⏱ [HORARIO]  - 🚀  [RESULTADO]️ | ✅✅✅✅✅✅',
-
-                loss:'⛔⛔⛔⛔⛔⛔⛔',
-
-                parcial:'🚀Resultado parcial\n\n✅([ACERTOS]) VS ❌([ERROS])\n\nAssertividade: [PORCENTAGEM_ACERTO] \n\nTotal de Velas Altas️: [TOTAL_VELAS_ALTAS] ',
-                final:'🚀Resultado Final\n\n✅([ACERTOS]) VS ❌([ERROS])\n\nAssertividade: [PORCENTAGEM_ACERTO] \n\nTotal de Velas Altas️: [TOTAL_VELAS_ALTAS] '
-            }); 
-        }else if(tipoJogo.nome.includes("DPremium")){
+            }else if(tipoJogo.nome.includes("DPremium")){
          
             const msgPremium = await MsgPremium.create({
                 bot_id:grupo.id,
@@ -898,7 +913,8 @@ async bucaGrupoRodrigo(req,res){
             grupo:grupo,
             padroes:tipoJogo
         })
-}
+},
+
 
 
    

@@ -1160,27 +1160,7 @@ async showcrashpremium(req,res){
            })
        }
 
-       var grupo = new Grupo();
-       if(usuarioLogado.permissoes.length > 0){
-         grupo = await Grupo.findOne({where:{ id:id }});
-       }else{
-         grupo = await Grupo.findOne({
-            where: {
-                [Op.and]: [
-                  { usuario_id: usuarioLogado.id },
-                  { id:id }
-                ]
-              }
-    
-           });
-       }
-       if(!grupo){
-        return res.status(201).json({
-            msg:'Grupo não existe',
-           
-        })
-      }
-
+     
        var crash =await EstrategiaCrashPremium.findOne({
         where: {bot_id:id},
         order: [ [ 'id', 'DESC' ]],
@@ -1190,7 +1170,6 @@ async showcrashpremium(req,res){
 
        return res.status(201).send({
         crashpremium:crash,
-        grupopremium:grupo
        })
     }
     catch(err){

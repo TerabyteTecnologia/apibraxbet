@@ -15,4 +15,6 @@ router.delete('/delete/:id',authService.isAdmin,controller.excluirjogos);
 router.put('/zerarwinloss/:id',authService.authorize,controller.zerawinloss);
 router.put('/mudastatus/:id',authService.authorize,controller.mudastatus);
 
+router.get('/buscarodrigo/:id',authService.authorizeRodrigo,controller.bucaGrupoRodrigoJogo);
+
 module.exports =router;

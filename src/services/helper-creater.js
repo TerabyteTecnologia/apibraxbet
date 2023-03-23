@@ -8,6 +8,8 @@ const EstrategiaPenalty = require('../models/dtb_estrategia_penalty');
 const MsgPenalty = require('../models/dtb_mensagem_padrao_penalty');
 const EstrategiaFantan = require('../models/dtb_estrategia_fantan');
 const MsgFantan = require('../models/dtb_mensagem_padrao_fantan');
+const EstrategiaCrashPremium = require('../models/dtb_estrategiapremium_crash');
+const MsgCrashPremium = require('../models/dtb_mensagem_padrao_premium');
 module.exports ={
     async createMiner(tipoJogoId){
         await EstrategiaMiner.create({
@@ -372,11 +374,49 @@ module.exports ={
         }); 
 
     },
+    async createCPremium(tipoJogoId){   
+        await EstrategiaCrashPremium.create({
+                bot_id:tipoJogoId,
+                nome:"Estratégia Padrão",
+                sair:0,
+                aguardar:7,
+                notificar:3,
+                lista:4,
+                sair_em:5
+        }); 
+
+        await MsgCrashPremium.create({
+            bot_id:tipoJogoId,
+            abertura:'             ⚠️ ATENÇÃO ⚠️ \n\nIniciaremos o envio dos sinais em breve. \n\nFique atento e proveita.', 
+            fechamento:'             Sinais encerrados \n\nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP. \n\nNão perca esta oportunidade!',  
+            atencao:'🔔 Entrada confirmada 🔔 \n\nPOSSÍVEL [VELA_ALTA]️x  \n\n[LISTA_HORARIO]  🚀 \n\nEntre [INTERVALO] \n\n🎰 Braxbet: <a href="https://braxbet.com/casino/game/1688165">Aviator</a> \n\n<a href="https://tracking.braxbet.com/o/Dcyg1x?lpage=HPK4a6">🌟🌟🌟 Cadastre-se 🌟🌟🌟</a>',
+            
+            win:'⏱ [HORARIO]  - 🚀  [RESULTADO]️ | ✅✅✅✅✅✅',
+            
+            loss:'⛔⛔⛔⛔⛔⛔⛔',
+
+            parcial:'🚀Resultado parcial \n\n✅([ACERTOS]) VS ❌([ERROS]) \n\nAssertividade: [PORCENTAGEM_ACERTO] \n\nTotal de Velas Altas️: [TOTAL_VELAS_ALTAS',
+            final:'🚀Resultado Final \n\n✅([ACERTOS]) VS ❌([ERROS]) \n\nAssertividade: [PORCENTAGEM_ACERTO] \n\nTotal de Velas Altas️: [TOTAL_VELAS_ALTAS]',
+            tipomensagem:1,
+        }); 
+        await MsgCrashPremium.create({
+            bot_id: tipoJogoId,
+            atencao:'🔔 Entrada confirmada 🔔 \n\nPOSSÍVEL [VELA_ALTA]️x  \n\n[LISTA_HORARIO]  🚀 \n\nEntre [INTERVALO] \n\n🎰 Braxbet: <a href="https://braxbet.com/casino/game/1688165">Aviator</a> \n\n<a href="https://tracking.braxbet.com/o/Dcyg1x?lpage=HPK4a6">🌟🌟🌟 Cadastre-se 🌟🌟🌟</a>',
+            
+            win:'⏱ [HORARIO]  - 🚀  [RESULTADO]️ | ✅✅✅✅✅✅',
+            
+            loss:'⛔⛔⛔⛔⛔⛔⛔',
+
+            parcial:'🚀Resultado parcial \n\n✅([ACERTOS]) VS ❌([ERROS]) \n\nAssertividade: [PORCENTAGEM_ACERTO] \n\nTotal de Velas Altas️: [TOTAL_VELAS_ALTAS',
+            final:'🚀Resultado Final \n\n✅([ACERTOS]) VS ❌([ERROS]) \n\nAssertividade: [PORCENTAGEM_ACERTO] \n\nTotal de Velas Altas️: [TOTAL_VELAS_ALTAS]',
+            tipomensagem:2,
+        }); 
+    },
 
     async updatewinlossEstrategias(tipoJogoName,win,loss,id){
         
          ///Monta as estrategias e mensagem ;;;;; melhorar isso atravazes de utils
-         console.log('tipoJogoName',tipoJogoName)
+        
           if(tipoJogoName.includes('Crash')){
             var aviator = await EstrategiaAviator.findOne({where:{ id:id }});
             console.log('aviator',aviator)

@@ -3,16 +3,14 @@ require('dotenv').config();
 
  const TipoJogo = require('../models/dtb_tipojogo');
  const EstrategiaDouble = require('../models/dtb_estrategia_double');
- const EstrategiaFantan = require('../models/dtb_estrategia_fantan');
+
 
 
  const EstrategiaCrash = require('../models/dtb_estrategia_crash');
- const EstrategiaCrashPremium = require('../models/dtb_estrategiapremium_crash');
  const EstrategiaDoublePremium= require('../models/dtb_estrategiapremium_double');
  const EstrategiaRoleta = require('../models/dtb_estrategia_bet365');
 
 
- const MsgFantan = require('../models/dtb_mensagem_padrao_fantan');
 
 
 
@@ -20,7 +18,7 @@ require('dotenv').config();
  const ValidationContract = require("../validator/fluent-validators");
 
  const authService = require('../services/auth-services');
-const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan } = require('../services/helper-creater');
+const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan, createCPremium } = require('../services/helper-creater');
 
 module.exports = {
  
@@ -168,15 +166,8 @@ async store(req,res){
             await createPenalty(tipoJogo.id)
        
         }else if(tipoJogo.nome.includes("CPremium")){             
-          const crash = await EstrategiaCrashPremium.create({
-              bot_id:tipoJogo.id,
-              nome:"Estratégia Padrão",
-              sair:0,
-              aguardar:7,
-              notificar:3,
-              lista:4,
-              sair_em:5
-          }); 
+         await createCPremium(tipoJogo.id);
+
         }else if(tipoJogo.nome.includes("DPremium")){
           const doublepremium = await EstrategiaDoublePremium.create({
               bot_id:tipoJogo.id,
@@ -538,6 +529,39 @@ catch(err){
 }
 },
 
+
+async bucaGrupoRodrigoJogo(req,res){
+    const { id } = req.params;
+    
+        const tipoJogo = await TipoJogo.findOne( {where:{id:id},
+           include:[
+                {association:"estrategiascrash"},
+                {association:"estrategiasdouble"},
+                {association:"estrategiasbet"},
+                {association:"estrategiacrashpremium"},
+                {association:"estrategiasfantan"},
+                {association:"estrategiadoublepremium"},
+                {association:"estrategiasfutballstudio"},
+                {association:"estrategiapenalty"},
+                {association:"estrategiasminers"},
+                {association:"estrategiasaviator"},
+
+                {association:"mensagensfantan"},
+                {association:"mensagensaviator"},
+                {association:"mensagensminer"},
+                {association:"mensagensfootballstudio"},
+                {association:"mensagenspenalty"},
+                {association:"mensagenspremium"},
+            ]},
+    
+        );
+
+       
+
+        return res.status(201).send({
+            padroes:tipoJogo
+        })
+}
    
 }
 

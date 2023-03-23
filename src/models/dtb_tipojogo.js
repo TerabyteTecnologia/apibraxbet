@@ -36,6 +36,8 @@ class dtb_tipojogo extends Model {
      this.hasMany(models.dtb_mensagem_padrao_miner,{ foreignKey: 'bot_id', as:'mensagensminer' });
      this.hasMany(models.dtb_mensagem_padrao_futballstudio,{ foreignKey: 'bot_id', as:'mensagensfootballstudio'});
      this.hasMany(models.dtb_mensagem_padrao_penalty,{ foreignKey: 'bot_id', as:'mensagenspenalty'});
+     this.hasMany(models.dtb_mensagem_padrao_premium,{ foreignKey: 'bot_id', as:'mensagenspremium'});
+
  
     }
  

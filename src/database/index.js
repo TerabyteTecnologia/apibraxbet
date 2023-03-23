@@ -34,6 +34,7 @@ const dtb_mensagem_padrao_aviator = require('../models/dtb_mensagem_padrao_aviat
 const dtb_mensagem_padrao_miner = require('../models/dtb_mensagem_padrao_miner');
 const dtb_mensagem_padrao_futballstudio = require('../models/dtb_mensagem_padrao_futballstudio');
 const dtb_mensagem_padrao_penalty = require('../models/dtb_mensagem_padrao_penalty');
+const dtb_mensagem_padrao_premium = require('../models/dtb_mensagem_padrao_premium');
 
 
 
@@ -69,6 +70,7 @@ dtb_mensagem_padrao_aviator.init(connection);
 dtb_mensagem_padrao_miner.init(connection);
 dtb_mensagem_padrao_futballstudio.init(connection);
 dtb_mensagem_padrao_penalty.init(connection);
+dtb_mensagem_padrao_premium.init(connection);
 
 
 
@@ -107,3 +109,4 @@ dtb_mensagem_padrao_aviator.associate(connection.models);
 dtb_mensagem_padrao_miner.associate(connection.models);
 dtb_mensagem_padrao_futballstudio.associate(connection.models);
 dtb_mensagem_padrao_penalty.associate(connection.models);
+dtb_mensagem_padrao_premium.associate(connection.models);
