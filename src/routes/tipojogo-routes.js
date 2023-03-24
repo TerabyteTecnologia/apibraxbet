@@ -17,4 +17,6 @@ router.put('/mudastatus/:id',authService.authorize,controller.mudastatus);
 
 router.get('/buscarodrigo/:id',authService.authorizeRodrigo,controller.bucaGrupoRodrigoJogo);
 
+router.put('/updatewinloss',authService.authorizeRodrigo,controller.updatewinloss);
+
 module.exports =router;

@@ -1445,24 +1445,113 @@ async mudastatus(req,res){
 },
    
 
-    //CPremium Mensagem ############################################################################
-    async showCPremium(req,res){
-        try{
-        const { id,tipo } = req.params;
+//CPremium Mensagem ############################################################################
+async showCPremium(req,res){
+    try{
+    const { id,tipo } = req.params;
+    const token = req.body.token || req.query.token || req.headers['x-access-token'];
+    const usuarioLogado = await authService.decodeToken(token);
+    
+    if(!usuarioLogado){
+        return res.status(201).json({
+            msg:'Usuario não existe',
+            
+        })
+    }
+
+    
+    var grupo = await Grupo.findOne({where:{ id:id }});
+    
+    
+
+    if(!grupo){
+        return res.status(201).json({
+            msg:'Grupo não existe',
+        
+        })
+    }
+
+
+    const mensagempremium = await MsgPremium.findOne({
+        where: {bot_id:id,tipomensagem:tipo},
+        order: [ [ 'id', 'DESC' ]],
+        });
+
+    return res.status(201).send({
+        mensagempremium
+    })
+    }
+    catch(err){
+        return res.status(200).send({
+            error:err.message
+        })
+    }
+
+},
+async updateCPremium(req,res){
+        
+    try{
+        //id do bottt
+        const {id} = req.params;
         const token = req.body.token || req.query.token || req.headers['x-access-token'];
         const usuarioLogado = await authService.decodeToken(token);
         
         if(!usuarioLogado){
             return res.status(201).json({
                 msg:'Usuario não existe',
-                
+            
             })
         }
+    
 
+    
+    const {
+        abertura,
+        fechamento,
+        atencao,
+        win,
+        loss,
+        parcial,
+        final,
+        statusparcialfinal,
+        statusmanha,
+        statustarde,
+        statusnoite,
+        manhainicio,
+        manhafim,
+        tardeinicio,
+        tardefim,
+        noiteinicio,
+        noiteifim,
+        tipo,
+    } = req.body;
+        let contract = new ValidationContract();
+        contract.isRequired(atencao, 'atencao', 'A atencao é obrigatorio');
+        contract.isRequired(win, 'win', 'O win é obrigatorio');
+        contract.isRequired(loss, 'loss', 'O loss é obrigatorio');
         
-        var grupo = await Grupo.findOne({where:{ id:id }});
-       
+        // Se os dados forem inválidos
+        if (!contract.isValid()) {
+            return res.status(200).send({
+            error:contract.errors()
+            })
+        };
         
+        
+        var grupo = new Grupo();
+        if(usuarioLogado.permissoes.length > 0){
+        grupo = await Grupo.findOne({where:{ id:id }});
+        }else{
+        grupo = await Grupo.findOne({
+            where: {
+                [Op.and]: [
+                { usuario_id: usuarioLogado.id },
+                { id:id }
+                ]
+            }
+    
+            });
+        }
 
         if(!grupo){
             return res.status(201).json({
@@ -1472,149 +1561,15 @@ async mudastatus(req,res){
         }
 
 
-        const mensagempremium = await MsgPremium.findOne({
+        const msgOld = await MsgPremium.findOne({
             where: {bot_id:id,tipomensagem:tipo},
             order: [ [ 'id', 'DESC' ]],
-            });
+        });
 
-        return res.status(201).send({
-            mensagempremium
-        })
-        }
-        catch(err){
-            return res.status(200).send({
-                error:err.message
-            })
-        }
-
-    },
-    async updateCPremium(req,res){
-            
-        try{
-            //id do bottt
-            const {id} = req.params;
-            const token = req.body.token || req.query.token || req.headers['x-access-token'];
-            const usuarioLogado = await authService.decodeToken(token);
-            
-            if(!usuarioLogado){
-                return res.status(201).json({
-                    msg:'Usuario não existe',
-                
-                })
-            }
-        
-
-        
-        const {
-            abertura,
-            fechamento,
-            atencao,
-            win,
-            loss,
-            parcial,
-            final,
-            statusparcialfinal,
-            statusmanha,
-            statustarde,
-            statusnoite,
-            manhainicio,
-            manhafim,
-            tardeinicio,
-            tardefim,
-            noiteinicio,
-            noiteifim,
-            tipo,
-        } = req.body;
-            let contract = new ValidationContract();
-            contract.isRequired(atencao, 'atencao', 'A atencao é obrigatorio');
-            contract.isRequired(win, 'win', 'O win é obrigatorio');
-            contract.isRequired(loss, 'loss', 'O loss é obrigatorio');
-            
-            // Se os dados forem inválidos
-            if (!contract.isValid()) {
-                return res.status(200).send({
-                error:contract.errors()
-                })
-            };
-            
-            
-            var grupo = new Grupo();
-            if(usuarioLogado.permissoes.length > 0){
-            grupo = await Grupo.findOne({where:{ id:id }});
-            }else{
-            grupo = await Grupo.findOne({
-                where: {
-                    [Op.and]: [
-                    { usuario_id: usuarioLogado.id },
-                    { id:id }
-                    ]
-                }
-        
-                });
-            }
-
-            if(!grupo){
-                return res.status(201).json({
-                    msg:'Grupo não existe',
-                
-                })
-            }
-
-
-            const msgOld = await MsgPremium.findOne({
-                where: {bot_id:id,tipomensagem:tipo},
-                order: [ [ 'id', 'DESC' ]],
-            });
-    
-        if(!msgOld){
-            if(tipo == 1){
-                const mensagempremium = await MsgPremium.create({
-                    bot_id: id,
-                    abertura,
-                    fechamento,
-                    atencao,
-                    win,
-                    loss,
-                    parcial,
-                    final,
-                    statusparcialfinal,
-                    statusmanha,
-                    statustarde,
-                    statusnoite,
-                    manhainicio,
-                    manhafim,
-                    tardeinicio,
-                    tardefim,
-                    noiteinicio,
-                    noiteifim,
-                   
-        
-                }); 
-            }else{
-                const mensagempremium = await MsgPremium.create({
-                    bot_id: id,
-                    atencao,
-                    win,
-                    loss,
-                    parcial,
-                    final,
-                    statusparcialfinal,
-        
-                }); 
-            }
-        
-
-            return res.status(201).json({
-                resolucao:true,
-                msg:"Mensagem cadastrado com sucesso",
-            
-
-            })
-        
-        }
-
+    if(!msgOld){
         if(tipo == 1){
-             await msgOld.update({
+            const mensagempremium = await MsgPremium.create({
+                bot_id: id,
                 abertura,
                 fechamento,
                 atencao,
@@ -1632,33 +1587,78 @@ async mudastatus(req,res){
                 tardefim,
                 noiteinicio,
                 noiteifim,
-            
-        }); 
+                
+    
+            }); 
         }else{
-        await msgOld.update({
+            const mensagempremium = await MsgPremium.create({
+                bot_id: id,
+                atencao,
+                win,
+                loss,
+                parcial,
+                final,
+                statusparcialfinal,
+    
+            }); 
+        }
+    
+
+        return res.status(201).json({
+            resolucao:true,
+            msg:"Mensagem cadastrado com sucesso",
+        
+
+        })
+    
+    }
+
+    if(tipo == 1){
+            await msgOld.update({
+            abertura,
+            fechamento,
             atencao,
             win,
             loss,
             parcial,
             final,
             statusparcialfinal,
-            
-        }); 
-    }
+            statusmanha,
+            statustarde,
+            statusnoite,
+            manhainicio,
+            manhafim,
+            tardeinicio,
+            tardefim,
+            noiteinicio,
+            noiteifim,
+        
+    }); 
+    }else{
+    await msgOld.update({
+        atencao,
+        win,
+        loss,
+        parcial,
+        final,
+        statusparcialfinal,
+        
+    }); 
+}
 
-        return res.status(201).json({
-            msg:"Mensagem Atualizado com sucesso",
-            
+    return res.status(201).json({
+        msg:"Mensagem Atualizado com sucesso",
+        
 
-        })
-    }
-    catch(err){
-        return res.status(200).send({
-            error:err.message
-        })
-    }
+    })
+}
+catch(err){
+    return res.status(200).send({
+        error:err.message
+    })
+}
 
-    },
+},
 
 }
 

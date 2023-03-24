@@ -10,6 +10,9 @@ const EstrategiaFantan = require('../models/dtb_estrategia_fantan');
 const MsgFantan = require('../models/dtb_mensagem_padrao_fantan');
 const EstrategiaCrashPremium = require('../models/dtb_estrategiapremium_crash');
 const MsgCrashPremium = require('../models/dtb_mensagem_padrao_premium');
+const TipoJogo = require('../models/dtb_tipojogo');
+
+
 module.exports ={
     async createMiner(tipoJogoId){
         await EstrategiaMiner.create({
@@ -526,6 +529,18 @@ module.exports ={
         
           }
   
-    }
+    },
+
+    async updatewinlossJogo(win,loss,id){
+        
+        
+        var jogo = await TipoJogo.findOne({where:{ id:id }});
+         
+           await jogo.update({
+               win:win,
+               loss:loss
+            }); 
+ 
+     }
 
 }

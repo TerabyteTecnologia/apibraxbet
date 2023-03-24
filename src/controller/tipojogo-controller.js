@@ -18,7 +18,7 @@ require('dotenv').config();
  const ValidationContract = require("../validator/fluent-validators");
 
  const authService = require('../services/auth-services');
-const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan, createCPremium } = require('../services/helper-creater');
+const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan, createCPremium, updatewinlossJogo } = require('../services/helper-creater');
 
 module.exports = {
  
@@ -561,7 +561,41 @@ async bucaGrupoRodrigoJogo(req,res){
         return res.status(201).send({
             padroes:tipoJogo
         })
+},
+
+async updatewinloss(req,res){
+         
+    try{
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+      
+        const {win,loss,id} = req.body;
+        let contract = new ValidationContract();
+        contract.isRequired(win, 'win', 'O win é obrigatorio');
+        contract.isRequired(loss, 'loss', 'O loss é obrigatorio');
+        contract.isRequired(id, 'id', 'O id é obrigatorio');
+    
+
+        // Se os dados forem inválidos
+        if (!contract.isValid()) {
+            return res.status(200).send({
+            error:contract.errors()
+            })
+        };
+
+        await updatewinlossJogo(win,loss,id)
+      
+    return res.status(201).json({
+        msg:"Jogo Atualizado com sucesso",
+
+    })
 }
+catch(err){
+    return res.status(200).send({
+        error:err.message
+    })
+}
+},
+
    
 }
 

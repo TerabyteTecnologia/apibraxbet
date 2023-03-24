@@ -10,10 +10,6 @@ const TipoJogo = require('../models/dtb_tipojogo');
  const { Op } = require("sequelize");
 module.exports = {
  
-
-
-
-
 //penalty  ############################################################################
 
 async showPenalty(req,res){
@@ -150,9 +146,6 @@ catch(err){
 }
 
 },
-
-
-
 
 
 }

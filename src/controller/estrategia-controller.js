@@ -289,7 +289,6 @@ async indexfutballstudio(req,res){
     }
 },
 
-
 async storefutballstudio(req,res){
     try{
         const token = req.body.token || req.query.token || req.headers['x-access-token'];
@@ -449,7 +448,6 @@ catch(err){
 }
 
 },
-
 
 async excluirfutballstudio(req,res){
          
@@ -1619,6 +1617,7 @@ catch(err){
 
 },
 
+
 //Roeleta  ############################################################################
 async indexRoleta(req,res){
     try{
@@ -1819,8 +1818,6 @@ async mudastatusroleta(req,res){
         })
     }
 },
-
-
 
 async updatewinloss(req,res){
          
