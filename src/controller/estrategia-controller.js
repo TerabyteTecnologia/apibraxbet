@@ -8,6 +8,8 @@ const Grupo = require('../models/dtb_bots');
  const EstrategiaCrashPremium = require('../models/dtb_estrategiapremium_crash');
  const EstrategiaDoublePremium = require('../models/dtb_estrategiapremium_double');
  const EstrategiaRoleta = require('../models/dtb_estrategia_bet365');
+ const EstrategiaFurtuneTiger = require('../models/dtb_estrategia_furtunetiger');
+ const TipoJogo = require('../models/dtb_tipojogo');
  const ValidationContract = require("../validator/fluent-validators");
  const authService = require('../services/auth-services');
  const { Op } = require("sequelize");
@@ -1852,6 +1854,138 @@ catch(err){
     })
 }
 },
+
+
+//Fortunetiger estarategia  ############################################################################
+async showFurtuneTiger(req,res){
+    try{
+       const { id } = req.params;
+       const token = req.body.token || req.query.token || req.headers['x-access-token'];
+       const usuarioLogado = await authService.decodeToken(token);
+       
+       if(!usuarioLogado){
+           return res.status(201).json({
+               msg:'Usuario não existe',
+              
+           })
+       }
+
+       
+
+   
+
+        var grupo = await TipoJogo.findOne({where:{ id:id }});
+    
+       
+     
+
+       if(!grupo){
+        return res.status(201).json({
+            msg:'Jogo não existe',
+           
+        })
+       }
+
+       
+    const fortunetiger = await EstrategiaFurtuneTiger.findOne({
+        where: {bot_id:id},
+        order: [ [ 'id', 'DESC' ]],
+        });
+
+       return res.status(201).send({
+        fortunetiger
+       })
+
+    }
+    catch(err){
+        return res.status(200).send({
+            error:err.message
+        })
+    }
+
+},
+
+async updadeFurtunerTiger(req,res){
+         
+    try{
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+        const usuarioLogado = await authService.decodeToken(token);
+        
+        if(!usuarioLogado){
+            return res.status(201).json({
+                msg:'Usuario não existe',
+               
+            })
+        }
+     
+        const { id } = req.params;
+        const {espera,minimo,maximo} = req.body;
+        let contract = new ValidationContract();
+        contract.isRequired(espera, 'espera', 'A espera é obrigatorio');
+        contract.isRequired(minimo, 'minimo', 'O minimo a é obrigatorio');
+        contract.isRequired(maximo, 'maximo', 'O maximo a é obrigatorio');
+       
+
+        // Se os dados forem inválidos
+        if (!contract.isValid()) {
+            return res.status(200).send({
+            error:contract.errors()
+            })
+        };
+        var grupo = new TipoJogo();
+      
+          grupo = await TipoJogo.findOne({where:{ id:id }});
+     
+        if(!grupo){
+            return res.status(201).json({
+                msg:'Grupo não existe',
+               
+            })
+        }
+        const furtuneOld = await EstrategiaFurtuneTiger.findOne({
+            where: {bot_id:id},
+            order: [ [ 'id', 'DESC' ]],
+            });
+ 
+    
+            if(!furtuneOld){
+                const furtune = await EstrategiaFurtuneTiger.create({
+                    bot_id: id,
+                    espera,
+                    minimo,
+                    maximo,
+                }); 
+                return res.status(201).json({
+                    resolucao:true,
+                    msg:"Fortune Tiger cadastrado com sucesso",
+                    data:furtune
+        
+                })
+            }
+
+            
+   
+    const furtuneUpdate = await furtuneOld.update({
+        espera,
+        minimo,
+        maximo,
+    }); 
+
+    return res.status(201).json({
+        msg:"Miner Atualizado com sucesso",
+        furtunetiger:furtuneUpdate
+
+    })
+}
+catch(err){
+    return res.status(200).send({
+        error:err.message
+    })
+}
+
+},
+
+
 
 
 }

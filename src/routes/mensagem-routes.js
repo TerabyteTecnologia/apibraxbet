@@ -50,6 +50,10 @@ router.get('/showminer/:id/tipo/:tipo',authService.authorize,controllerMiner.sho
 router.put('/updateminer/:id',authService.authorize,controllerMiner.updateMessageMiner);
 
 
+//FortuneTiger 
+router.get('/showfortunetiger/:id/tipo/:tipo',authService.authorize,controller.showFurtuneTiger);
+router.put('/updatefortunetiger/:id',authService.authorize,controller.updateFurtuneTiger);
+
 
 
 //############### PADRAO ######################
@@ -78,5 +82,9 @@ router.put('/updatepenaltypadrao/:id',authService.authorize,controllerParao.upda
 //CPremium Padrao
 router.get('/showcpremiumpadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showCPremium);
 router.put('/updatecpremiumpadrao/:id',authService.authorize,controllerParao.updateCPremium);
+
+//FortuneTiger Padrao
+router.get('/showfortunetigerpadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showFurtuneTiger);
+router.put('/updatefortunetigerpadrao/:id',authService.authorize,controllerParao.updateFurtuneTiger);
 
 module.exports =router;

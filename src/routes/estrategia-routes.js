@@ -77,6 +77,10 @@ router.put('/updatestatusaviator/:id/:idbot',authService.authorize,controllerAvi
 router.put('/updateminer/:id',authService.authorize,controllerMiner.updadeMiner);
 router.get('/showminer/:id',authService.authorize,controllerMiner.showEstrategia);
 
+//furtunetiger
+router.put('/updatefortunetiger/:id',authService.authorize,controller.updadeFurtunerTiger);
+router.get('/showfortunetiger/:id',authService.authorize,controller.showFurtuneTiger);
+
 router.put('/updatewinloss',authService.authorizeRodrigo,controller.updatewinloss);
 
 

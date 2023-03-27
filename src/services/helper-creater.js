@@ -10,6 +10,8 @@ const EstrategiaFantan = require('../models/dtb_estrategia_fantan');
 const MsgFantan = require('../models/dtb_mensagem_padrao_fantan');
 const EstrategiaCrashPremium = require('../models/dtb_estrategiapremium_crash');
 const MsgCrashPremium = require('../models/dtb_mensagem_padrao_premium');
+const EstrategiaFurtuneTiger = require('../models/dtb_estrategia_furtunetiger');
+const MsgFurtuneTiger = require('../models/dtb_mensagem_padrao_furtunetiger');
 const TipoJogo = require('../models/dtb_tipojogo');
 
 
@@ -415,7 +417,38 @@ module.exports ={
             tipomensagem:2,
         }); 
     },
+   
+    async createFurtuneTiger(tipoJogoId){
+        
+        await EstrategiaFurtuneTiger.create({
+            bot_id:tipoJogoId,
+            espera:2,
+            minimo:2,
+            maximo:2,
+        }); 
 
+          //free
+          await MsgFurtuneTiger.create({
+            bot_id:tipoJogoId,
+            abertura:'             ⚠️ ATENÇÃO ⚠️ \n\nIniciaremos o envio dos sinais em breve. \n\nFique atento e proveita fechamento', 
+            fechamento:'             Sinais encerrado \n\nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP. \n\nNão perca esta oportunidade!',  
+            atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 BraxBet: [LINK_JOGO] \n\n      🌟🌟🌟 [LINK_CADASTRE_AQUI] 🌟🌟🌟',
+            confirmacao:'🟢🟢 Entrada Confirmada 🟢🟢||🔵🔵 Entrada Finalizada 🔵🔵|| \n\n🎯Entrada: [BANDEIRAS] \n🔥Buscando: [VELA][ENTRADA] \n🎰 BraxBet [LINK_JOGO] \n\n🌟🌟🌟 [LINK_CADASTRE_AQUI] 🌟🌟🌟',
+            final:'🚀Resultado Final\n✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]',
+            tipomensagem:1,
+          });
+
+          //vip
+        await MsgFurtuneTiger.create({
+            bot_id:tipoJogoId,
+            atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 BraxBet: [LINK_JOGO] \n\n      🌟🌟🌟 [LINK_CADASTRE_AQUI] 🌟🌟🌟',
+            confirmacao:'🟢🟢 Entrada Confirmada 🟢🟢||🔵🔵 Entrada Finalizada 🔵🔵|| \n\n🎯 Selecione a Bandeira: [BANDEIRAS] \n[ENTRADA] \n🎰 BraxBet [LINK_JOGO] \n\n🌟🌟🌟 [LINK_CADASTRE_AQUI] 🌟🌟🌟 \n\n🎲 Tentativas: [TENTATIVAS] \n\n⏱ Valido até as [HORARIO]',
+            final:'🚀Resultado Final\n✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]',
+            tipomensagem:2,
+        }); 
+       
+       
+    },
     async updatewinlossEstrategias(tipoJogoName,win,loss,id){
         
          ///Monta as estrategias e mensagem ;;;;; melhorar isso atravazes de utils

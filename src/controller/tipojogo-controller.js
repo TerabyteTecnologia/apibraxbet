@@ -18,7 +18,7 @@ require('dotenv').config();
  const ValidationContract = require("../validator/fluent-validators");
 
  const authService = require('../services/auth-services');
-const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan, createCPremium, updatewinlossJogo } = require('../services/helper-creater');
+const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan, createCPremium, updatewinlossJogo, createFurtuneTiger } = require('../services/helper-creater');
 
 module.exports = {
  
@@ -168,6 +168,9 @@ async store(req,res){
         }else if(tipoJogo.nome.includes("CPremium")){             
          await createCPremium(tipoJogo.id);
 
+        }else if(tipoJogo.nome.includes("Slot")){             
+            await createFurtuneTiger(tipoJogo.id);
+   
         }else if(tipoJogo.nome.includes("DPremium")){
           const doublepremium = await EstrategiaDoublePremium.create({
               bot_id:tipoJogo.id,
@@ -545,6 +548,7 @@ async bucaGrupoRodrigoJogo(req,res){
                 {association:"estrategiapenalty"},
                 {association:"estrategiasminers"},
                 {association:"estrategiasaviator"},
+                {association:"estrategiasfurtunetiger"},
 
                 {association:"mensagensfantan"},
                 {association:"mensagensaviator"},
@@ -552,6 +556,7 @@ async bucaGrupoRodrigoJogo(req,res){
                 {association:"mensagensfootballstudio"},
                 {association:"mensagenspenalty"},
                 {association:"mensagenspremium"},
+                {association:"mensagensfurtunetiger"},
             ]},
     
         );

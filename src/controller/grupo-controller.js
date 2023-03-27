@@ -13,6 +13,7 @@ require('dotenv').config();
  const MsgPremium = require('../models/dtb_mensagem_premium');
  const MsgRoleta = require('../models/dtb_mensagem_bet365');
  const MsgMiner = require('../models/dtb_mensagem_miner');
+ const MsgFurtuneTiger = require('../models/dtb_mensagem_furtunetiger');
 
  const ValidationContract = require("../validator/fluent-validators");
  const pm2 = require('pm2')
@@ -104,6 +105,7 @@ async store(req,res){
                  {association:"mensagensfootballstudio"},
                  {association:"mensagenspenalty"},
                  {association:"mensagenspremium"},
+                 {association:"mensagensfurtunetiger"},
              ]},
      
          );
@@ -221,6 +223,31 @@ async store(req,res){
 
 
                     tipomensagem:res.tipomensagem,
+                }); 
+               
+            })
+          
+        }else if(tipoJogo.nome.includes('Slot')){
+              
+            tipoJogo.mensagensfurtunetiger.map(async res=>{
+                await MsgFurtuneTiger.create({
+                    bot_id:grupo.id,
+                    abertura:res.abertura,
+                    fechamento:res.fechamento,
+                    atencao:res.atencao,
+                    confirmacao:res.confirmacao,
+                    final:res.final,
+                    statusgreen:res.statusgreen,
+                    tipomensagem:res.tipomensagem,
+                    manhainicio:res.manhainicio,
+                    manhafim:res.manhafim,
+                    tardeinicio:res.tardeinicio,
+                    tardefim:res.tardefim,
+                    noiteinicio:res.noiteinicio,
+                    noiteifim:res.noiteifim,
+                    statusmanha:res.statusmanha,
+                    statustarde:res.statustarde,
+                    statusnoite:res.statusnoite,
                 }); 
                
             })
@@ -356,7 +383,7 @@ async store(req,res){
                  })
              })
 
-            }else if(tipoJogo.nome.includes("DPremium")){
+        }else if(tipoJogo.nome.includes("DPremium")){
          
             const msgPremium = await MsgPremium.create({
                 bot_id:grupo.id,
@@ -877,6 +904,7 @@ async bucaGrupoRodrigo(req,res){
             {association:"mensagenspenalty"},
             {association:"mensagensminer"},
             {association:"mensagensaviator"},
+            {association:"mensagensfurtunetiger"},
         ]},
 
         );

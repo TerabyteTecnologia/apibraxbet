@@ -86,20 +86,11 @@ async updatepenalty(req,res){
             error:contract.errors()
             })
         };
-        var grupo = new Grupo();
-        if(usuarioLogado.permissoes.length > 0){
-          grupo = await Grupo.findOne({where:{ id:id }});
-        }else{
-          grupo = await Grupo.findOne({
-             where: {
-                 [Op.and]: [
-                   { usuario_id: usuarioLogado.id },
-                   { id:id }
-                 ]
-               }
-     
-            });
-        }
+        var grupo = new TipoJogo();
+
+          grupo = await TipoJogo.findOne({where:{ id:id }});
+        
+        
         if(!grupo){
             return res.status(201).json({
                 msg:'Grupo não existe',

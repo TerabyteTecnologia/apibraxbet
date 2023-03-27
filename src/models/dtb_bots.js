@@ -47,6 +47,7 @@ class dtb_bots extends Model {
     this.hasMany(models.dtb_mensagem_aviator,{ foreignKey: 'bot_id', as:'mensagensaviator' });
     // this.hasMany(models.dtb_estrategia_miner,{ foreignKey: 'bot_id', as:'estrategiasminers' });
     this.hasMany(models.dtb_mensagem_miner,{ foreignKey: 'bot_id', as:'mensagensminer' });
+    this.hasMany(models.dtb_mensagem_furtunetiger,{ foreignKey: 'bot_id', as:'mensagensfurtunetiger' });
   }
 
 
