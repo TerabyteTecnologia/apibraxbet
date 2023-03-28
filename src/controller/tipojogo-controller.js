@@ -311,9 +311,9 @@ async update(req,res){
             })
         }
     const {id} = req.params;
-    const {nome,coleta_dados,nome_tabela,caminho_robo,link_acesso,caminho_robo_adm} = req.body;
+    const {descricao,caminho_robo,link_acesso,caminho_robo_adm} = req.body;
     let contract = new ValidationContract();
-    contract.isRequired(nome, 'nome', 'O Nome é obrigatorio');
+    contract.isRequired(descricao, 'descricao', 'O descricao é obrigatorio');
     contract.isRequired(caminho_robo, 'caminho_robo', 'O dado é obrigatorio');
     contract.isRequired(caminho_robo_adm, 'caminho_robo_adm', 'O dado é obrigatorio');
     contract.isRequired(link_acesso, 'link_acesso', 'O dado é obrigatorio');
@@ -341,10 +341,10 @@ async update(req,res){
   
 
     const tipoJogos = await jogosOld.update({
-        nome,
         caminho_robo,
         caminho_robo_adm,
         link_acesso,
+        descricao,
     }); 
 
     return res.status(201).json({
