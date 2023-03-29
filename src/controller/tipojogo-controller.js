@@ -575,8 +575,8 @@ async updatewinloss(req,res){
       
         const {win,loss,id} = req.body;
         let contract = new ValidationContract();
-        contract.isRequired(win, 'win', 'O win é obrigatorio');
-        contract.isRequired(loss, 'loss', 'O loss é obrigatorio');
+        contract.isRequiredInteger(win, 'win', 'O win é obrigatorio');
+        contract.isRequiredInteger(loss, 'loss', 'O loss é obrigatorio');
         contract.isRequired(id, 'id', 'O id é obrigatorio');
     
 
