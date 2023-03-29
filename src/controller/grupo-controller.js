@@ -724,7 +724,6 @@ async ligarbot(req,res){
         })
        }
 
-     console.log('grupo',grupo);
 
      if(grupo.status == "I"){
         pm2.connect(function(err) {

@@ -441,7 +441,7 @@ async mudastatus(req,res){
                
                pm2.start({
                    script    : `${tipoJogo.caminho_robo_adm}`,
-                   name      : `maneger_${tipoJogo.nome}`,
+                   name      : `maneger_${tipoJogo.descricao}`,
                    args      : `${tipoJogo.id}`,
                    interpreter:'python3.8',
                    }, function(err, apps) {
@@ -462,7 +462,7 @@ async mudastatus(req,res){
                  process.exit(2)
                 }
                 
-                pm2.stop(`maneger_${tipoJogo.nome}`, function (err, proc) {
+                pm2.stop(`maneger_${tipoJogo.descricao}`, function (err, proc) {
                     //console.log(err,proc);
                      pm2.disconnect();
                   })
