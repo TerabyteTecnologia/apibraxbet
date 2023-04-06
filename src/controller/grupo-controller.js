@@ -160,7 +160,7 @@ async store(req,res){
                 
             }); 
         }else if(tipoJogo.nome.includes('Crash')){
-            console.log(tipoJogo)
+           // console.log(tipoJogo)
             tipoJogo.mensagensaviator.map(async res=>{
                
                 await MsgAviator.create({
@@ -182,7 +182,7 @@ async store(req,res){
 
 
                     manhainicio:res.manhainicio,
-                    manhafim:res.manhainicio,
+                    manhafim:res.manhafim,
                     tardeinicio:res.tardeinicio,
                     tardefim:res.tardefim,
                     noiteinicio:res.noiteinicio,
