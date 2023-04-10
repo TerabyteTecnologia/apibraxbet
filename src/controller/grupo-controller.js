@@ -913,7 +913,7 @@ async bucaGrupoRodrigo(req,res){
            include:[
                 {association:"estrategiascrash"},
                 {association:"estrategiasdouble"},
-                {association:"estrategiasbet"},
+                {association:"estrategiasroleta"},
                 {association:"estrategiacrashpremium"},
                 {association:"estrategiasfantan"},
                 {association:"estrategiadoublepremium"},
