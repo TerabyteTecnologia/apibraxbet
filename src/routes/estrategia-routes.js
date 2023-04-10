@@ -39,12 +39,12 @@ router.get('/showcrash/:id/:idbot',authService.authorize,controller.showcrash);
 router.put('/updatecrash/:id/:idbot',authService.authorize,controller.updatecrash);
 router.delete('/deletecrash/:id/:idbot',authService.authorize,controller.excluircrash);
 
-
+//Rotas Roleta
 router.get('/indexroleta/:id',authService.authorize,controller.indexRoleta);
-router.get('/showroleta/:id/:idbot',authService.authorize,controller.showroleta);
+router.get('/showroleta/:id',authService.authorize,controller.showroleta);
 router.put('/updateroleta/:id/:idbot',authService.authorize,controller.updateroleta);
 router.put('/mudastatusroleta/:id',authService.authorize,controller.mudastatusroleta);
-
+router.delete('/deleteroleta/:id/:idbot',authService.authorize,controller.excluirRoleta);
 //Rotas crashpremium
 router.get('/indexcrashpremium/:id',authService.authorize,controller.indexcrahspremium);
 router.post('/storecrashpremium/:id',authService.authorize,controller.storecrashpremium);

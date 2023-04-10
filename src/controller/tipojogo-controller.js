@@ -18,7 +18,7 @@ require('dotenv').config();
  const ValidationContract = require("../validator/fluent-validators");
 
  const authService = require('../services/auth-services');
-const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan, createCPremium, updatewinlossJogo, createFurtuneTiger } = require('../services/helper-creater');
+const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan, createCPremium, updatewinlossJogo, createFurtuneTiger, createRoleta } = require('../services/helper-creater');
 
 module.exports = {
  
@@ -180,55 +180,8 @@ async store(req,res){
               lista:4,
           }); 
         
-        }else if(tipoJogo.nome == "Roleta"){
-      
-      let rouletes_name=[
-              "Super Spin Roulette",
-              "bet365 Roulette",
-              "bet365 Dutch Roulette",
-              "Who Wants To Be a Millionaire Roulette",
-              "Mega Fire Blaze Roulette Live",
-              "Quantum Roulette Live",
-              "Roulette",
-              "Age Of The Gods Bonus Roulette",
-              "Football Roulette",
-              "Hindi Roulette",
-              "Speed Roulette",
-              "Greek  Roulette",
-              "Turkish Roulette",
-              "Roleta Brasileira",
-              "Quantum Auto Roulette",
-              "Speed Auto Roulette",
-              "Prestige Roulette",
-              "American Roulette",
-              "Spread Bet Roulette",
-              "Deutsches Roulette",
-              "Auto Roulette",
-              "Greek Quantum Roulette",
-              "UK Roulette",
-              "Quantum Roulette Italiana",
-              "Triumph Roulette",
-              "Roulette Italiana",
-          ]
-
-          rouletes_name.forEach( async (res) =>{
-
-              await EstrategiaRoleta.create({
-                  bot_id:tipoJogo.id,
-                  nome_roleta:res,
-                  sequencia_cor:11,
-                  sequencia_maior_menor:11,
-                  sequencia_par_impar:11,
-                  sequencia_duzias:8,
-                  sequencia_colunas:8,
-                  martingale:2,
-                  status:1,
-              }); 
-
-          })
-
-        
-          
+        }else if(tipoJogo.nome.includes("Roleta")){
+           await createRoleta(tipoJogo.id);
           
         }else{
           //Estrategia Crash

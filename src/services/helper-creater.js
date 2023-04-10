@@ -13,6 +13,7 @@ const MsgCrashPremium = require('../models/dtb_mensagem_padrao_premium');
 const EstrategiaFurtuneTiger = require('../models/dtb_estrategia_furtunetiger');
 const MsgFurtuneTiger = require('../models/dtb_mensagem_padrao_furtunetiger');
 const TipoJogo = require('../models/dtb_tipojogo');
+const EstrategiaRoleta = require('../models/dtb_estrategia_bet365');    
 
 
 module.exports ={
@@ -574,6 +575,22 @@ module.exports ={
                loss:loss
             }); 
  
-     }
+    },
+
+     async createRoleta(tipoJogoId){   
+        await EstrategiaRoleta.create({
+            bot_id:tipoJogoId,
+            nome_roleta:'Estrategia Padrão',
+            sequencia_cor:11,
+            sequencia_maior_menor:11,
+            sequencia_par_impar:11,
+            sequencia_duzias:8,
+            sequencia_colunas:8,
+            martingale:2,
+            status:1,
+        }); 
+
+       
+     },
 
 }

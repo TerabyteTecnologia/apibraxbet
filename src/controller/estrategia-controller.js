@@ -1654,7 +1654,7 @@ async indexRoleta(req,res){
 
 async showroleta(req,res){
     try{
-       const { id,idbot } = req.params;
+       const { id } = req.params;
        const token = req.body.token || req.query.token || req.headers['x-access-token'];
        const usuarioLogado = await authService.decodeToken(token);
        
@@ -1665,26 +1665,14 @@ async showroleta(req,res){
            })
        }
 
-       
-
-       var roleta = new EstrategiaRoleta();
-       if(usuarioLogado.permissoes.length > 0){
-        roleta = await EstrategiaRoleta.findOne({where:{ id:id }});
-       }else{
-        roleta = await EstrategiaRoleta.findOne({
-               where: {
-                   [Op.and]: [
-                    { bot_id: idbot},
-                     { id:id }
-                   ]
-                 }
-        });
-       }
-
-
+       var roleta = await EstrategiaRoleta.findOne({where:{ id:id }});
+     
        return res.status(201).send({
         roleta:roleta
        })
+
+
+
     }
     catch(err){
         return res.status(200).send({
@@ -1735,19 +1723,10 @@ async updateroleta(req,res){
             })
         };
     
-        var roletaOld = new EstrategiaRoleta();
-        if(usuarioLogado.permissoes.length > 0){
-            roletaOld = await EstrategiaRoleta.findOne({where:{ id:id }});
-        }else{
-            roletaOld = await EstrategiaRoleta.findOne({
-                where: {
-                    [Op.and]: [
-                     { bot_id: idbot},
-                      { id:id }
-                    ]
-                  }
-            });
-        }
+
+      
+           var roletaOld = await EstrategiaRoleta.findOne({where:{ id:id }});
+     
        
 
     if(!roletaOld){
@@ -1855,6 +1834,57 @@ catch(err){
 }
 },
 
+async excluirRoleta(req,res){
+         
+    try{
+        const { id,idbot } = req.params;
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+        const usuarioLogado = await authService.decodeToken(token);
+        
+        if(!usuarioLogado){
+            return res.status(201).json({
+                msg:'Usuario não existe',
+               
+            })
+        }
+
+        const estrategiaold = await EstrategiaRoleta.findOne({
+            where: {
+                [Op.and]: [
+                  { bot_id: idbot},
+                  { id:id }
+                ]
+              }
+    
+           });
+
+     
+          if(!estrategiaold){
+            return res.status(201).json({
+                msg:'Estrategia não existe',
+               
+            })
+        }
+
+
+
+    const estrategia = await EstrategiaRoleta.destroy({where:{id:estrategiaold.id}}); 
+
+    return res.status(201).json({
+        resolucao:true,
+        msg:"Estrategia Excluida com sucesso",
+        data:estrategia
+
+    })
+}
+catch(err){
+    return res.status(200).send({
+        resolucao:false,
+        error:err.message
+    })
+}
+
+},
 
 //Fortunetiger estarategia  ############################################################################
 async showFurtuneTiger(req,res){
