@@ -27,11 +27,12 @@ const dtb_mensagem_miner = require('../models/dtb_mensagem_miner');
 
 //furtunetiger
 const dtb_estrategia_furtunetiger = require('../models/dtb_estrategia_furtunetiger');
+const dtb_mensagem_furtunetiger = require('../models/dtb_mensagem_furtunetiger');
 
-
+//Roleta
 const dtb_estrategia_bet365 = require('../models/dtb_estrategia_bet365');
 const dtb_mensagem_bet365 = require('../models/dtb_mensagem_bet365');
-const dtb_mensagem_furtunetiger = require('../models/dtb_mensagem_furtunetiger');
+const dtb_mensagem_padrao_bet365 = require('../models/dtb_mensagem_padrao_bet365');
 
 //#### PAdrao
 const dtb_mensagem_padrao_fantan = require('../models/dtb_mensagem_padrao_fantan');
@@ -64,6 +65,7 @@ dtb_mensagem_fantan.init(connection);
 dtb_mensagem_premium.init(connection);
 dtb_estrategia_bet365.init(connection);
 dtb_mensagem_bet365.init(connection);
+dtb_mensagem_padrao_bet365.init(connection);
 dtb_mensagem_futballstudio.init(connection);
 dtb_estrategia_penalty.init(connection);
 dtb_mensagem_penalty.init(connection);
@@ -105,6 +107,7 @@ dtb_mensagem_double.associate(connection.models);
 dtb_mensagem_fantan.associate(connection.models);
 dtb_estrategia_bet365.associate(connection.models);
 dtb_mensagem_bet365.associate(connection.models);
+dtb_mensagem_padrao_bet365.associate(connection.models);
 dtb_mensagem_premium.associate(connection.models);
 dtb_mensagem_futballstudio.associate(connection.models);
 dtb_estrategia_penalty.associate(connection.models);

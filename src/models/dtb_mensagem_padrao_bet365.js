@@ -1,7 +1,7 @@
 
 const { Model, DataTypes } = require('sequelize');
 
-class dtb_mensagem_bet365 extends Model {
+class dtb_mensagem_padrao_bet365 extends Model {
   static init(sequelize) {
     super.init({
       bot_id:DataTypes.INTEGER,
@@ -38,11 +38,11 @@ class dtb_mensagem_bet365 extends Model {
 
 
   static associate(models){
-    this.belongsTo(models.dtb_bots,{ foreignKey: 'bot_id', as:'usuario' })
+    this.belongsTo(models.dtb_tipojogo,{ foreignKey: 'bot_id', as:'usuario' })
   }
  
 
 }
 
-module.exports = dtb_mensagem_bet365;
+module.exports = dtb_mensagem_padrao_bet365;
 

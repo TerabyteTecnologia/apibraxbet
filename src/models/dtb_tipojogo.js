@@ -25,7 +25,7 @@ class dtb_tipojogo extends Model {
      this.hasMany(models.dtb_estrategia_double,{ foreignKey: 'bot_id', as:'estrategiasdouble' });
      this.hasMany(models.dtb_estrategiapremium_crash,{ foreignKey: 'bot_id', as:'estrategiacrashpremium' });
      this.hasMany(models.dtb_estrategiapremium_double,{ foreignKey: 'bot_id', as:'estrategiadoublepremium' });
-     this.hasMany(models.dtb_estrategia_bet365,{ foreignKey: 'bot_id', as:'estrategiasbet' });
+     this.hasMany(models.dtb_estrategia_bet365,{ foreignKey: 'bot_id', as:'estrategiasroleta' });
      this.hasMany(models.dtb_estrategia_fantan,{ foreignKey: 'bot_id', as:'estrategiasfantan' });
      this.hasMany(models.dtb_estrategia_futballstudio,{ foreignKey: 'bot_id', as:'estrategiasfutballstudio' });
      this.hasMany(models.dtb_estrategia_penalty,{ foreignKey: 'bot_id', as:'estrategiapenalty' });
@@ -39,6 +39,7 @@ class dtb_tipojogo extends Model {
      this.hasMany(models.dtb_mensagem_padrao_penalty,{ foreignKey: 'bot_id', as:'mensagenspenalty'});
      this.hasMany(models.dtb_mensagem_padrao_premium,{ foreignKey: 'bot_id', as:'mensagenspremium'});
      this.hasMany(models.dtb_mensagem_padrao_furtunetiger,{ foreignKey: 'bot_id', as:'mensagensfurtunetiger'});
+     this.hasMany(models.dtb_mensagem_padrao_bet365,{ foreignKey: 'bot_id', as:'mensagensroleta'});
 
  
     }
