@@ -42,6 +42,7 @@ router.delete('/deletecrash/:id/:idbot',authService.authorize,controller.excluir
 //Rotas Roleta
 router.get('/indexroleta/:id',authService.authorize,controller.indexRoleta);
 router.get('/showroleta/:id',authService.authorize,controller.showroleta);
+router.post('/storeroleta/:id',authService.authorize,controller.storeroleta);
 router.put('/updateroleta/:id/:idbot',authService.authorize,controller.updateroleta);
 router.put('/mudastatusroleta/:id',authService.authorize,controller.mudastatusroleta);
 router.delete('/deleteroleta/:id/:idbot',authService.authorize,controller.excluirRoleta);

@@ -1682,6 +1682,72 @@ async showroleta(req,res){
 
 },
 
+async storeroleta(req,res){
+    
+    try{
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+        const usuarioLogado = await authService.decodeToken(token);
+        const { id } = req.params; //bod_id
+        if(!usuarioLogado){
+            return res.status(201).json({
+                msg:'Grupo não existe',
+               
+            })
+        }
+        
+      
+        const {
+            nome_roleta,
+            sequencia_cor,  
+            sequencia_maior_menor,
+            sequencia_par_impar,
+            sequencia_duzias,
+            sequencia_colunas,
+            martingale
+        } = req.body;
+        let contract = new ValidationContract();
+        contract.isRequired(nome_roleta, 'nome_roleta', 'O Nome é obrigatorio');
+        contract.isRequired(sequencia_cor, 'sequencia_cor', 'A seguencia de cor é obrigatorio');
+        contract.isRequired(sequencia_maior_menor, 'sequencia_maior_menor', 'A sequencia maior menor a é obrigatorio');
+        contract.isRequired(sequencia_par_impar, 'sequencia_par_impar', 'A sequencia par impar b é obrigatorio');
+        contract.isRequired(sequencia_duzias, 'sequencia_duzias', 'A sequencia duzias é obrigatorio');
+        contract.isRequired(sequencia_colunas, 'sequencia_colunas', 'A sequencia colunas  é obrigatorio');
+        contract.isInteger(parseInt(martingale), 'martingale', 'O martingale é obrigatorio');
+        // Se os dados forem inválidos
+        if (!contract.isValid()) {
+            return res.status(200).send({
+            error:contract.errors()
+            })
+        };
+          
+        const roleta = await EstrategiaRoleta.create({
+            bot_id:id,
+            nome_roleta,
+            sequencia_cor,  
+            sequencia_maior_menor,
+            sequencia_par_impar,
+            sequencia_duzias,
+            sequencia_colunas,
+            martingale
+        }); 
+
+        
+
+        return res.status(201).json({
+            msg:"Estrategia Cadastrado com sucesso",
+            roleta:roleta
+    
+        })
+     
+
+    }
+    catch(err){
+        return res.status(200).send({
+            error:err.message
+        })
+    }
+},
+
 async updateroleta(req,res){
          
     try{
