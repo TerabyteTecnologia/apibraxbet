@@ -106,6 +106,7 @@ async store(req,res){
                  {association:"mensagenspenalty"},
                  {association:"mensagenspremium"},
                  {association:"mensagensfurtunetiger"},
+                 {association:"mensagensroleta"},
              ]},
      
          );
@@ -212,7 +213,7 @@ async store(req,res){
                     statusparcialfinal:res.statusparcialfinal,
                    
                     manhainicio:res.manhainicio,
-                    manhafim:res.manhainicio,
+                    manhafim:res.manhafim,
                     tardeinicio:res.tardeinicio,
                     tardefim:res.tardefim,
                     noiteinicio:res.noiteinicio,
@@ -281,7 +282,7 @@ async store(req,res){
                     statuscoberturabranco:res.statuscoberturabranco,
 
                     manhainicio:res.manhainicio,
-                    manhafim:res.manhainicio,
+                    manhafim:res.manhafim,
                     tardeinicio:res.tardeinicio,
                     tardefim:res.tardefim,
                     noiteinicio:res.noiteinicio,
@@ -317,7 +318,7 @@ async store(req,res){
                     
                     
                     manhainicio:res.manhainicio,
-                    manhafim:res.manhainicio,
+                    manhafim:res.manhafim,
                     tardeinicio:res.tardeinicio,
                     tardefim:res.tardefim,
                     noiteinicio:res.noiteinicio,
@@ -343,7 +344,7 @@ async store(req,res){
                     cofirmacao:res.cofirmacao,
 
                     manhainicio:res.manhainicio,
-                    manhafim:res.manhainicio,
+                    manhafim:res.manhafim,
                     tardeinicio:res.tardeinicio,
                     tardefim:res.tardefim,
                     noiteinicio:res.noiteinicio,
@@ -398,28 +399,35 @@ async store(req,res){
             }); 
         }else if(tipoJogo.nome == "Roleta"){
         
-         
+            tipoJogo.mensagensroleta.map(async res=>{
+                await MsgRoleta.create({
+                    bot_id:grupo.id,
+                    abertura:res.abertura,
+                    fechamento:res.fechamento,
+                    atencao:res.atencao,
+                    confirmacao:res.confirmacao,
+                    win:res.win,
+                    loss:res.loss,
+                    martingale:res.martingale,
+                    parcial:res.parcial,
+                    final:res.final,
+                    statusmartingale:res.statusmartingale,
+                    statusparcialfinal:res.statusparcialfinal,
+                    statuscoberturabranco:res.statuscoberturabranco,
+                    tipomensagem:res.tipomensagem,
+                    manhainicio:res.manhainicio,
+                    manhafim:res.manhafim,
+                    tardeinicio:res.tardeinicio,
+                    tardefim:res.tardefim,
+                    noiteinicio:res.noiteinicio,
+                    noiteifim:res.noiteifim,
+                    statusmanha:res.statusmanha,
+                    statustarde:res.statustarde,
+                    statusnoite:res.statusnoite,
+              
+                })
+            })
 
-            const msgRoleta = await MsgRoleta.create({
-                bot_id: grupo.id,
-                atencao:"⚠️ ANALISANDO A MESA ⚠️\n🎰 Roleta: [NOME_ROLETA]\n🎲 Estratégia: [REPETICAO]",
-
-                confirmacao:"🔔 APOSTA CONFIRMADA 🔔\n🎰 Roleta: [NOME_ROLETA]\n📍Entrar: [ENTRAR_EM]\n0️⃣ Cobrir o ZERO.",
-
-                win:"✅✅✅ GREEN ✅✅✅\n[RESULTADO]",
-                
-                loss:"❌❌RED❌❌\n[RED]",
-                
-                martingale:'🔁 [NUMERO]º Martingale!',
-
-                parcial:"🚀Resultado Parcial:✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]",
-            
-                final:"🚀Resultado Final:✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]",
-            
-            }); 
-            
-            
-            
         }else{
             //Mensagem Crash
             const msgCrash = await MsgCrash.create({
@@ -913,6 +921,7 @@ async bucaGrupoRodrigo(req,res){
                 {association:"estrategiapenalty"},
                 {association:"estrategiasminers"},
                 {association:"estrategiasaviator"},
+                {association:"estrategiasroleta"},
             ]},
     
         );

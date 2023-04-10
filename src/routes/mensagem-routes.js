@@ -22,9 +22,9 @@ router.put('/mudastatus/:id',authService.authorize,controller.mudastatus);
 router.get('/showcpremium/:id/tipo/:tipo',authService.authorize,controller.showCPremium);
 router.put('/updatecpremium/:id',authService.authorize,controller.updateCPremium);
 
-//Roleta Routes
-router.put('/updateroleta/:id',authService.authorize,controller.updateroleta);
-router.get('/showroleta/:id',authService.authorize,controller.showroleta);
+//Roleta 
+router.get('/showroleta/:id/tipo/:tipo',authService.authorize,controller.showRoleta);
+router.put('/updateroleta/:id',authService.authorize,controller.updateRoleta);
 
 //Fantan
 router.get('/showfantan/:id/tipo/:tipo',authService.authorize,controller.showFantan);
@@ -87,4 +87,8 @@ router.put('/updatecpremiumpadrao/:id',authService.authorize,controllerParao.upd
 router.get('/showfortunetigerpadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showFurtuneTiger);
 router.put('/updatefortunetigerpadrao/:id',authService.authorize,controllerParao.updateFurtuneTiger);
 
+
+//Roleta Padrao
+router.get('/showroletapadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showRoleta);
+router.put('/updateroletapadrao/:id',authService.authorize,controllerParao.updateRoleta);
 module.exports =router;

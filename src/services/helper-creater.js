@@ -14,6 +14,7 @@ const EstrategiaFurtuneTiger = require('../models/dtb_estrategia_furtunetiger');
 const MsgFurtuneTiger = require('../models/dtb_mensagem_padrao_furtunetiger');
 const TipoJogo = require('../models/dtb_tipojogo');
 const EstrategiaRoleta = require('../models/dtb_estrategia_bet365');    
+const MsgRoleta = require('../models/dtb_mensagem_padrao_bet365');    
 
 
 module.exports ={
@@ -490,55 +491,13 @@ module.exports ={
           }else if(tipoJogoName.includes("CPremium")){             
            //implementar
           }else if(tipoJogoName == "Roleta"){
-        
-                    let rouletes_name=[
-                            "Super Spin Roulette",
-                            "bet365 Roulette",
-                            "bet365 Dutch Roulette",
-                            "Who Wants To Be a Millionaire Roulette",
-                            "Mega Fire Blaze Roulette Live",
-                            "Quantum Roulette Live",
-                            "Roulette",
-                            "Age Of The Gods Bonus Roulette",
-                            "Football Roulette",
-                            "Hindi Roulette",
-                            "Speed Roulette",
-                            "Greek  Roulette",
-                            "Turkish Roulette",
-                            "Roleta Brasileira",
-                            "Quantum Auto Roulette",
-                            "Speed Auto Roulette",
-                            "Prestige Roulette",
-                            "American Roulette",
-                            "Spread Bet Roulette",
-                            "Deutsches Roulette",
-                            "Auto Roulette",
-                            "Greek Quantum Roulette",
-                            "UK Roulette",
-                            "Quantum Roulette Italiana",
-                            "Triumph Roulette",
-                            "Roulette Italiana",
-                        ]
-  
-            rouletes_name.forEach( async (res) =>{
-  
-                await EstrategiaRoleta.create({
-                    bot_id:tipoJogo.id,
-                    nome_roleta:res,
-                    sequencia_cor:11,
-                    sequencia_maior_menor:11,
-                    sequencia_par_impar:11,
-                    sequencia_duzias:8,
-                    sequencia_colunas:8,
-                    martingale:2,
-                    status:1,
-                }); 
-  
-            })
-  
-          
-            
-            
+                   
+            var roleta = await EstrategiaRoleta.findOne({where:{ id:id }});
+            await roleta.update({
+                win:win,
+                loss:loss
+             })
+
           }else{
             //Estrategia Crash
             await EstrategiaCrash.create({
@@ -577,7 +536,8 @@ module.exports ={
  
     },
 
-     async createRoleta(tipoJogoId){   
+     async createRoleta(tipoJogoId){  
+
         await EstrategiaRoleta.create({
             bot_id:tipoJogoId,
             nome_roleta:'Estrategia Padrão',
@@ -589,7 +549,49 @@ module.exports ={
             martingale:2,
             status:1,
         }); 
+       
+        //free
+        await MsgRoleta.create({
+            bot_id: tipoJogoId,
+            
+            abertura:'             ⚠️ ATENÇÃO ⚠️ \n\nIniciaremos o envio dos sinais em breve. \n\nFique atento e proveita.', 
+           
+            fechamento:'             Sinais encerrados \nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP. \nNão perca esta oportunidade!',  
+           
+            atencao:"⚠️ ANALISANDO A MESA ⚠️\n🎰 Roleta: [NOME_ROLETA]\n🎲 Estratégia: [REPETICAO]",
 
+            confirmacao:"🔔 APOSTA CONFIRMADA 🔔\n🎰 Roleta: [NOME_ROLETA]\n📍Entrar: [ENTRAR_EM]\n0️⃣ Cobrir o ZERO.",
+
+            win:"✅✅✅ GREEN ✅✅✅\n[RESULTADO]",
+            
+            loss:"❌❌RED❌❌\n[RED]",
+            
+            martingale:'🔁 [NUMERO]º Martingale!',
+
+            parcial:"🚀Resultado Parcial:✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]",
+        
+            final:"🚀Resultado Final:✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]",
+            tipomensagem:1,
+        }); 
+
+        //vip
+        await MsgRoleta.create({
+            bot_id: tipoJogoId,
+            atencao:"⚠️ ANALISANDO A MESA ⚠️\n🎰 Roleta: [NOME_ROLETA]\n🎲 Estratégia: [REPETICAO]",
+
+            confirmacao:"🔔 APOSTA CONFIRMADA 🔔\n🎰 Roleta: [NOME_ROLETA]\n📍Entrar: [ENTRAR_EM]\n0️⃣ Cobrir o ZERO.",
+
+            win:"✅✅✅ GREEN ✅✅✅\n[RESULTADO]",
+            
+            loss:"❌❌RED❌❌\n[RED]",
+            
+            martingale:'🔁 [NUMERO]º Martingale!',
+
+            parcial:"🚀Resultado Parcial:✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]",
+        
+            final:"🚀Resultado Final:✅([ACERTOS]) VS ❌([ERROS])\nAssertividade: [PORCENTAGEM_ACERTO]",
+            tipomensagem:2,
+        }); 
        
      },
 

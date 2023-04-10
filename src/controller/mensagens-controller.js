@@ -955,59 +955,6 @@ async showcrash(req,res){
 
 
 
-async showroleta(req,res){
-    try{
-       const { id } = req.params;
-       const token = req.body.token || req.query.token || req.headers['x-access-token'];
-       const usuarioLogado = await authService.decodeToken(token);
-       
-       if(!usuarioLogado){
-           return res.status(201).json({
-               msg:'Usuario não existe',
-              
-           })
-       }
-
-       var grupo = new Grupo();
-       if(usuarioLogado.permissoes.length > 0){
-         grupo = await Grupo.findOne({where:{ id:id }});
-       }else{
-         grupo = await Grupo.findOne({
-            where: {
-                [Op.and]: [
-                  { usuario_id: usuarioLogado.id },
-                  { id:id }
-                ]
-              }
-    
-           });
-       }
-
-       if(!grupo){
-        return res.status(201).json({
-            msg:'Grupo não existe',
-           
-        })
-    }
-
-
-    const msgroleta = await MsgRoleta.findOne({
-        where: {bot_id:id},
-        order: [ [ 'id', 'DESC' ]],
-        });
-       
-       return res.status(201).send({
-        mensagemroleta:msgroleta
-       })
-    }
-    catch(err){
-        return res.status(200).send({
-            error:err.message
-        })
-    }
-
-},
-
 
 async updatedouble(req,res){
          
@@ -1269,116 +1216,7 @@ catch(err){
 },
 
 
-async updateroleta(req,res){
-         
-    try{
-        //id do bottt
-        const {id} = req.params;
-        const token = req.body.token || req.query.token || req.headers['x-access-token'];
-        const usuarioLogado = await authService.decodeToken(token);
-        
-        if(!usuarioLogado){
-            return res.status(201).json({
-                msg:'Usuario não existe',
-               
-            })
-        }
-      
-  
-    const {atencao,confirmacao,win,loss,martingale,parcial,final,statusmartingale,statusparcialfinal,statuscoberturabranco} = req.body;
-        let contract = new ValidationContract();
-        contract.isRequired(atencao, 'atencao', 'A atencao é obrigatorio');
-        contract.isRequired(confirmacao, 'confirmacao', 'O confirmacao é obrigatorio');
-        contract.isRequired(win, 'win', 'O win é obrigatorio');
-        contract.isRequired(loss, 'loss', 'O loss é obrigatorio');
 
-        // Se os dados forem inválidos
-        if (!contract.isValid()) {
-            return res.status(200).send({
-            error:contract.errors()
-            })
-        };
-    
-        
-        var grupo = new Grupo();
-        if(usuarioLogado.permissoes.length > 0){
-          grupo = await Grupo.findOne({where:{ id:id }});
-        }else{
-          grupo = await Grupo.findOne({
-             where: {
-                 [Op.and]: [
-                   { usuario_id: usuarioLogado.id },
-                   { id:id }
-                 ]
-               }
-     
-            });
-        }
-
-           if(!grupo){
-            return res.status(201).json({
-                msg:'Grupo não existe',
-               
-            })
-        }
-
-
-        const msgOld = await MsgRoleta.findOne({
-            where: {bot_id:id},
-            order: [ [ 'id', 'DESC' ]],
-            });
- 
-    if(!msgOld){
-        const msgRoleta = await MsgRoleta.create({
-            bot_id: id,
-            atencao,
-            confirmacao,
-            win,
-            loss,
-            martingale,
-            parcial,
-            final,
-            statusmartingale,
-            statusparcialfinal,
-            statuscoberturabranco,
-        }); 
-      
-        return res.status(201).json({
-            resolucao:true,
-            msg:"Mensagem Cadastrado com sucesso",
-            data:msgRoleta
-
-        })
-     
-    }
-
-   
-    const msgRoleta = await msgOld.update({
-        atencao,
-        confirmacao,
-        win,
-        loss,
-        martingale,
-        parcial,
-        final,
-        statusmartingale,
-        statusparcialfinal,
-        statuscoberturabranco,
-    }); 
-
-    return res.status(201).json({
-        msg:"Mensagem Atualizado com sucesso",
-        data:msgRoleta
-
-    })
-}
-catch(err){
-    return res.status(200).send({
-        error:err.message
-    })
-}
-
-},
 
 
 async mudastatus(req,res){
@@ -1445,6 +1283,241 @@ async mudastatus(req,res){
     }
 },
    
+
+ //Roleta Mensagem ############################################################################
+async showRoleta(req,res){
+    try{
+    const { id,tipo } = req.params;
+    const token = req.body.token || req.query.token || req.headers['x-access-token'];
+    const usuarioLogado = await authService.decodeToken(token);
+    
+    if(!usuarioLogado){
+        return res.status(201).json({
+            msg:'Usuario não existe',
+            
+        })
+    }
+
+    var grupo = await Grupo.findOne({where:{ id:id }});
+   
+    if(!grupo){
+        return res.status(201).json({
+            msg:'Grupo não existe',
+        
+    })
+    }
+
+
+    const mensagemroleta = await MsgRoleta.findOne({
+        where: {bot_id:id,tipomensagem:tipo},
+        order: [ [ 'id', 'DESC' ]],
+    });
+
+    return res.status(201).send({
+        mensagemroleta
+    })
+    }
+    catch(err){
+        return res.status(200).send({
+            error:err.message
+        })
+    }
+
+},
+async updateRoleta(req,res){
+        
+    try{
+        //id do bottt
+        const {id} = req.params;
+        const token = req.body.token || req.query.token || req.headers['x-access-token'];
+        const usuarioLogado = await authService.decodeToken(token);
+        
+        if(!usuarioLogado){
+            return res.status(201).json({
+                msg:'Usuario não existe',
+            
+            })
+        }
+    
+
+    
+    const {
+        abertura,
+        fechamento,
+        atencao,
+        confirmacao,
+        win,
+        loss,
+        martingale,
+        parcial,
+        final,
+        statusmartingale,
+        statusparcialfinal,
+        statuscoberturabranco,
+        statusmanha,
+        statustarde,
+        statusnoite,
+        manhainicio,
+        manhafim,
+        tardeinicio,
+        tardefim,
+        noiteinicio,
+        noiteifim,
+        tipo,
+    } = req.body;
+        let contract = new ValidationContract();
+        contract.isRequired(atencao, 'atencao', 'A atencao é obrigatorio');
+        contract.isRequired(confirmacao, 'confirmacao', 'O confirmacao é obrigatorio');
+        contract.isRequired(win, 'win', 'O win é obrigatorio');
+        contract.isRequired(loss, 'loss', 'O loss é obrigatorio');
+
+        // Se os dados forem inválidos
+        if (!contract.isValid()) {
+            return res.status(200).send({
+            error:contract.errors()
+        })
+        };
+        
+        
+        
+        var grupo = new Grupo();
+        if(usuarioLogado.permissoes.length > 0){
+        grupo = await Grupo.findOne({where:{ id:id }});
+        }else{
+        grupo = await Grupo.findOne({
+            where: {
+                [Op.and]: [
+                { usuario_id: usuarioLogado.id },
+                { id:id }
+                ]
+            }
+    
+            });
+        }
+
+        if(!grupo){
+            return res.status(201).json({
+                msg:'Grupo não existe',
+            
+            })
+        }
+
+
+        const msgOld = await MsgRoleta.findOne({
+            where: {bot_id:id,tipomensagem:tipo},
+            order: [ [ 'id', 'DESC' ]],
+        });
+
+    if(!msgOld){
+        if(tipo == 1){
+             await MsgRoleta.create({
+                bot_id: id,
+                abertura,
+                fechamento,
+                atencao,
+                confirmacao,
+                win,
+                loss,
+                martingale,
+                parcial,
+                final,
+                statusmartingale,
+                statusparcialfinal,
+                statuscoberturabranco,
+                statusmanha,
+                statustarde,
+                statusnoite,
+                manhainicio,
+                manhafim,
+                tardeinicio,
+                tardefim,
+                noiteinicio,
+                noiteifim,
+                tipo,
+    
+            }); 
+        }else{
+             await MsgCPremium.create({
+                bot_id: id,
+                confirmacao,
+                win,
+                loss,
+                martingale,
+                parcial,
+                final,
+                statusmartingale,
+                statusparcialfinal,
+                statuscoberturabranco,
+                tipo,
+            
+            }); 
+        }
+    
+
+        return res.status(201).json({
+            resolucao:true,
+            msg:"Mensagem cadastrado com sucesso",
+        
+
+        })
+    
+    }
+
+    if(tipo == 1){
+    await msgOld.update({
+        abertura,
+        fechamento,
+        atencao,
+        confirmacao,
+        win,
+        loss,
+        martingale,
+        parcial,
+        final,
+        statusmartingale,
+        statusparcialfinal,
+        statuscoberturabranco,
+        statusmanha,
+        statustarde,
+        statusnoite,
+        manhainicio,
+        manhafim,
+        tardeinicio,
+        tardefim,
+        noiteinicio,
+        noiteifim,
+        tipo,
+        
+    }); 
+    }else{
+    await msgOld.update({
+        confirmacao,
+        win,
+        loss,
+        martingale,
+        parcial,
+        final,
+        statusmartingale,
+        statusparcialfinal,
+        statuscoberturabranco,
+        tipo,
+        
+    }); 
+}
+
+    return res.status(201).json({
+        msg:"Mensagem Atualizado com sucesso",
+        
+
+    })
+}
+catch(err){
+    return res.status(200).send({
+        error:err.message
+    })
+}
+
+},
 
 //CPremium Mensagem ############################################################################
 async showCPremium(req,res){
