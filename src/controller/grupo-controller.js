@@ -922,6 +922,8 @@ async bucaGrupoRodrigo(req,res){
                 {association:"estrategiasminers"},
                 {association:"estrategiasaviator"},
                 {association:"estrategiasroleta"},
+                {association:"mensagensfurtunetiger"},
+                
             ]},
     
         );
