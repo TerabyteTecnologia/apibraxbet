@@ -126,20 +126,9 @@
             };
         
             
-            var grupo = new Grupo();
-            if(usuarioLogado.permissoes.length > 0){
-            grupo = await Grupo.findOne({where:{ id:id }});
-            }else{
-            grupo = await Grupo.findOne({
-                where: {
-                    [Op.and]: [
-                    { usuario_id: usuarioLogado.id },
-                    { id:id }
-                    ]
-                }
-        
-                });
-            }
+         
+            var grupo = await Grupo.findOne({where:{ id:id }});
+         
 
             if(!grupo){
                 return res.status(201).json({
@@ -251,7 +240,7 @@
             statusmensagem,
             statusmartingale,
             statusparcialfinal,
-            statuscoberturabranco
+            statuscoberturabranco,
         
     }); 
     }
@@ -379,20 +368,9 @@
                 })
             };
         
-            var grupo = new Grupo();
-            if(usuarioLogado.permissoes.length > 0){
-            grupo = await Grupo.findOne({where:{ id:id }});
-            }else{
-            grupo = await Grupo.findOne({
-                where: {
-                    [Op.and]: [
-                    { usuario_id: usuarioLogado.id },
-                    { id:id }
-                    ]
-                }
+      
+           var grupo = await Grupo.findOne({where:{ id:id }});
         
-                });
-            }
 
             if(!grupo){
                 return res.status(201).json({
@@ -1069,6 +1047,8 @@
             fechamento,
             atencao,
             cofirmacao,
+            statusparcialfinal,
+            statusmensagem,
             tipo,
             statusmanha,
             statustarde,
@@ -1130,6 +1110,8 @@
                     fechamento,
                     atencao,
                     cofirmacao,
+                    statusparcialfinal,
+                    statusmensagem,
                     statusmanha,
                     statustarde,
                     statusnoite,
@@ -1147,6 +1129,8 @@
                     bot_id: id,
                     atencao,
                     cofirmacao,
+                    statusparcialfinal,
+                    statusmensagem,
                     tipo,
         
                 }); 
@@ -1168,6 +1152,8 @@
                 fechamento,
                 atencao,
                 cofirmacao,
+                statusparcialfinal,
+                statusmensagem,
                 statusmanha,
                 statustarde,
                 statusnoite,
@@ -1184,6 +1170,8 @@
         const msgpenalty = await msgOld.update({
                 atencao,
                 cofirmacao,
+                statusparcialfinal,
+                statusmensagem,
                 tipo,
             
         }); 

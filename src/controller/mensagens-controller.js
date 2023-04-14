@@ -705,6 +705,8 @@ async updatePenalty(req,res){
         fechamento,
         atencao,
         cofirmacao,
+        statusparcialfinal,
+        statusmensagem,
         tipo,
         statusmanha,
         statustarde,
@@ -769,6 +771,8 @@ async updatePenalty(req,res){
                 fechamento,
                 atencao,
                 cofirmacao,
+                statusparcialfinal,
+                statusmensagem,
                 statusmanha,
                 statustarde,
                 statusnoite,
@@ -786,6 +790,8 @@ async updatePenalty(req,res){
                 bot_id: id,
                 atencao,
                 cofirmacao,
+                statusparcialfinal,
+                statusmensagem,
 
     
              }); 
@@ -799,7 +805,7 @@ async updatePenalty(req,res){
 
         })
      
-    }
+        }
 
      if(tipo == 1){
         const msgpenalty = await msgOld.update({
@@ -807,6 +813,8 @@ async updatePenalty(req,res){
             fechamento,
             atencao,
             cofirmacao,
+            statusparcialfinal,
+            statusmensagem,
             statusmanha,
             statustarde,
             statusnoite,
@@ -821,8 +829,10 @@ async updatePenalty(req,res){
     }); 
      }else{
        const msgpenalty = await msgOld.update({
-            atencao,
-            cofirmacao,
+        atencao,
+        cofirmacao,
+        statusparcialfinal,
+        statusmensagem,
 
            
     }); 
@@ -1439,6 +1449,7 @@ async updateRoleta(req,res){
         }else{
              await MsgCPremium.create({
                 bot_id: id,
+                atencao,
                 confirmacao,
                 win,
                 loss,
@@ -1831,20 +1842,9 @@ async updateFurtuneTiger(req,res){
         };
         
         
-        var grupo = new Grupo();
-        if(usuarioLogado.permissoes.length > 0){
-        grupo = await Grupo.findOne({where:{ id:id }});
-        }else{
-        grupo = await Grupo.findOne({
-            where: {
-                [Op.and]: [
-                { usuario_id: usuarioLogado.id },
-                { id:id }
-                ]
-            }
-    
-            });
-        }
+     
+        var grupo = await Grupo.findOne({where:{ id:id }});
+     
 
         if(!grupo){
             return res.status(201).json({

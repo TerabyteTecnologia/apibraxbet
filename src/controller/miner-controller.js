@@ -268,20 +268,9 @@ try{
         };
     
         
-        var grupo = new Grupo();
-        if(usuarioLogado.permissoes.length > 0){
-          grupo = await Grupo.findOne({where:{ id:id }});
-        }else{
-          grupo = await Grupo.findOne({
-             where: {
-                 [Op.and]: [
-                   { usuario_id: usuarioLogado.id },
-                   { id:id }
-                 ]
-               }
      
-            });
-        }
+         var grupo = await Grupo.findOne({where:{ id:id }});
+       
 
         if(!grupo){
             return res.status(201).json({
@@ -364,11 +353,14 @@ try{
         }); 
         }else{
             const msgCrash = await msgOld.update({
+                atencao,
+                confirmacao,
                 parcial,
                 final,
                 padrao_entrada,
                 padrao_nao_entrada,
                 statusparcialfinal,
+                tipo
                 
             }); 
         }
