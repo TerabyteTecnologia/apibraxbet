@@ -40,7 +40,7 @@ class dtb_tipojogo extends Model {
      this.hasMany(models.dtb_mensagem_padrao_premium,{ foreignKey: 'bot_id', as:'mensagenspremium'});
      this.hasMany(models.dtb_mensagem_padrao_furtunetiger,{ foreignKey: 'bot_id', as:'mensagensfurtunetiger'});
      this.hasMany(models.dtb_mensagem_padrao_bet365,{ foreignKey: 'bot_id', as:'mensagensroleta'});
-
+     this.hasMany(models.dtb_mensagem_padrao_double,{ foreignKey: 'bot_id', as:'mensagemdouble'});
  
     }
  

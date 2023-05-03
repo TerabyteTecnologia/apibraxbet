@@ -11,10 +11,13 @@ const controllerParao = require('../controller/padrao-controller');
 
 router.get('/',authService.authorize,controller.index);
 router.post('/',authService.authorize,controller.store);
-router.get('/showdouble/:id',authService.authorize,controller.showdouble);
+
 router.get('/showcrash/:id',authService.authorize,controller.showcrash);
-router.put('/updatedouble/:id',authService.authorize,controller.updatedouble);
 router.put('/updatecrash/:id',authService.authorize,controller.updatecrash);
+
+router.get('/showdouble/:id/tipo/:tipo',authService.authorize,controller.showdouble);
+router.put('/updatedouble/:id',authService.authorize,controller.updatedouble);
+
 router.put('/mudastatus/:id',authService.authorize,controller.mudastatus);
 
 
@@ -91,4 +94,9 @@ router.put('/updatefortunetigerpadrao/:id',authService.authorize,controllerParao
 //Roleta Padrao
 router.get('/showroletapadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showRoleta);
 router.put('/updateroletapadrao/:id',authService.authorize,controllerParao.updateRoleta);
+
+//double Padrao
+router.get('/showdoublepadrao/:id/tipo/:tipo',authService.authorize,controllerParao.showdouble);
+router.put('/updatedoublepadrao/:id',authService.authorize,controllerParao.updatedouble)
+
 module.exports =router;

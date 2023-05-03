@@ -16,6 +16,7 @@ const dtb_estrategia_aviator = require('../models/dtb_estrategia_aviator');
 const dtb_mensagem_crash = require('../models/dtb_mensagem_crash');
 const dtb_mensagem_premium = require('../models/dtb_mensagem_premium');
 const dtb_mensagem_double = require('../models/dtb_mensagem_double');
+const dtb_mensagem_padrao_double = require('../models/dtb_mensagem_padrao_double');
 const dtb_mensagem_fantan = require('../models/dtb_mensagem_fantan');
 const dtb_mensagem_futballstudio = require('../models/dtb_mensagem_futballstudio');
 const dtb_mensagem_penalty = require('../models/dtb_mensagem_penalty');
@@ -82,6 +83,7 @@ dtb_mensagem_padrao_premium.init(connection);
 dtb_estrategia_furtunetiger.init(connection);
 dtb_mensagem_padrao_furtunetiger.init(connection);
 dtb_mensagem_furtunetiger.init(connection);
+dtb_mensagem_padrao_double.init(connection);
 
 
 
@@ -125,3 +127,4 @@ dtb_mensagem_padrao_premium.associate(connection.models);
 dtb_estrategia_furtunetiger.associate(connection.models);
 dtb_mensagem_padrao_furtunetiger.associate(connection.models);
 dtb_mensagem_furtunetiger.associate(connection.models);
+dtb_mensagem_padrao_double.associate(connection.models);

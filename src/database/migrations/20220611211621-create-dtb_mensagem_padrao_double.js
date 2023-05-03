@@ -2,7 +2,7 @@
 
 module.exports = {
   up: async (queryInterface, Sequelize) => {
-    await queryInterface.createTable('dtb_mensagem_double', { 
+    await queryInterface.createTable('dtb_mensagem_padrao_double', { 
       id: {
         type: Sequelize.INTEGER,
         autoIncrement: true,
@@ -12,7 +12,7 @@ module.exports = {
       bot_id: {
         type: Sequelize.INTEGER,
         allowNull: false,
-        references: { model: 'dtb_bots', key: 'id' },
+        references: { model: 'dtb_tipojogo', key: 'id' },
         onUpdate: 'CASCADE',
         onDelete: 'CASCADE',
       },
@@ -145,6 +145,6 @@ module.exports = {
   },
 
   down: async (queryInterface, Sequelize) => {
-    await queryInterface.dropTable('dtb_mensagem_double');
+    await queryInterface.dropTable('dtb_mensagem_padrao_double');
   }
 };
