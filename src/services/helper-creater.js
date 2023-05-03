@@ -15,9 +15,64 @@ const MsgFurtuneTiger = require('../models/dtb_mensagem_padrao_furtunetiger');
 const TipoJogo = require('../models/dtb_tipojogo');
 const EstrategiaRoleta = require('../models/dtb_estrategia_bet365');    
 const MsgRoleta = require('../models/dtb_mensagem_padrao_bet365');    
-
+const EstrategiaDouble = require('../models/dtb_estrategia_double');
 
 module.exports ={
+    async createDouble(tipoJogoId){
+        
+          //Estrategias doubles
+          await EstrategiaDouble.create({
+            bot_id:tipoJogoId,
+            nome:'Sequencia 5 preto',
+            sequencia:'2,2,2,2,2,2',
+            apostar_em:'1',
+            martingale:'2',
+        }); 
+
+        await EstrategiaDouble.create({
+            bot_id:tipoJogoId,
+            nome:'Sequencia 5 vermelho',
+            sequencia:'1,1,1,1,1,1',
+            apostar_em:'2',
+            martingale:'2',
+        }); 
+
+
+        await EstrategiaDouble.create({
+            bot_id:tipoJogoId,
+            nome:'Alternancia 5 preto',
+            sequencia:'1,2,1,2,1',
+            apostar_em:'2',
+            martingale:'2',
+        }); 
+
+        await EstrategiaDouble.create({
+            bot_id:tipoJogoId,
+            nome:'Alternancia 5 vermelho',
+            sequencia:'2,1,2,1,2',
+            apostar_em:'1',
+            martingale:'2',
+        }); 
+        
+        await EstrategiaDouble.create({
+            bot_id:tipoJogoId,
+            nome:'Dois em dois preto',
+            sequencia:'2,2,1,1,2',
+            apostar_em:'2',
+            martingale:'2',
+        });
+        
+        
+        await EstrategiaDouble.create({
+            bot_id:tipoJogoId,
+            nome:'Dois em dois vermelho',
+            sequencia:'1,1,2,2,1',
+            apostar_em:'1',
+            martingale:'2',
+        }); 
+
+
+    },
     async createMiner(tipoJogoId){
         await EstrategiaMiner.create({
             bot_id:tipoJogoId,

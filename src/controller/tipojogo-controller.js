@@ -11,14 +11,11 @@ require('dotenv').config();
  const EstrategiaRoleta = require('../models/dtb_estrategia_bet365');
 
 
-
-
-
  const pm2 = require('pm2')
  const ValidationContract = require("../validator/fluent-validators");
 
  const authService = require('../services/auth-services');
-const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan, createCPremium, updatewinlossJogo, createFurtuneTiger, createRoleta } = require('../services/helper-creater');
+const { createMiner, createAviator, createFootBallStudio, createPenalty, createFantan, createCPremium, updatewinlossJogo, createFurtuneTiger, createRoleta, createDouble } = require('../services/helper-creater');
 
 module.exports = {
  
@@ -94,59 +91,7 @@ async store(req,res){
    
         ///Monta as estrategias e mensagem ;;;;; melhorar isso atravazes de utils
         if(tipoJogo.nome.includes('Double')){
-
-          //Estrategias doubles
-              await EstrategiaDouble.create({
-                  bot_id:tipoJogo.id,
-                  nome:'Sequencia 5 preto',
-                  sequencia:'2,2,2,2,2,2',
-                  apostar_em:'1',
-                  martingale:'2',
-              }); 
-
-              await EstrategiaDouble.create({
-                  bot_id:tipoJogo.id,
-                  nome:'Sequencia 5 vermelho',
-                  sequencia:'1,1,1,1,1,1',
-                  apostar_em:'2',
-                  martingale:'2',
-              }); 
-
-
-              await EstrategiaDouble.create({
-                  bot_id:tipoJogo.id,
-                  nome:'Alternancia 5 preto',
-                  sequencia:'1,2,1,2,1',
-                  apostar_em:'2',
-                  martingale:'2',
-              }); 
-
-              await EstrategiaDouble.create({
-                  bot_id:tipoJogo.id,
-                  nome:'Alternancia 5 vermelho',
-                  sequencia:'2,1,2,1,2',
-                  apostar_em:'1',
-                  martingale:'2',
-              }); 
-              
-              await EstrategiaDouble.create({
-                  bot_id:tipoJogo.id,
-                  nome:'Dois em dois preto',
-                  sequencia:'2,2,1,1,2',
-                  apostar_em:'2',
-                  martingale:'2',
-              });
-              
-              
-              await EstrategiaDouble.create({
-                  bot_id:tipoJogo.id,
-                  nome:'Dois em dois vermelho',
-                  sequencia:'1,1,2,2,1',
-                  apostar_em:'1',
-                  martingale:'2',
-              }); 
-
-         
+           await createDouble(tipoJogo.id);
         }else if(tipoJogo.nome.includes('Crash')){
            await createAviator(tipoJogo.id)
       

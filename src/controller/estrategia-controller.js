@@ -55,7 +55,7 @@ async storedouble(req,res){
         const { id } = req.params; //bod_id
         if(!usuarioLogado){
             return res.status(201).json({
-                msg:'Grupo não existe',
+                msg:'Usuario não existe',
                
             })
         }
