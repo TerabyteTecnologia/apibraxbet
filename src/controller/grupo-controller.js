@@ -107,6 +107,7 @@ async store(req,res){
                  {association:"mensagenspremium"},
                  {association:"mensagensfurtunetiger"},
                  {association:"mensagensroleta"},
+                 {association:"mensagemdouble"},
              ]},
      
          );
@@ -142,24 +143,40 @@ async store(req,res){
         if(tipoJogo.nome.includes('Double')){
 
             //Mensagem double
-            await MsgDouble.create({
+            tipoJogo.mensagemdouble.map(async res=>{
+               
+                await MsgDouble.create({
                     bot_id: grupo.id,
-                    atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 Blaze: <a href="https://blaze.com/pt/games/double">Double</a>',
-                    
-                    cofirmacao:'🔔 Entrada Confirmada 🔔 \n📍Entrar Após [ULTIMO_NUMERO] [ULTIMA_COR]  \n🎰  Blaze: <a href="https://blaze.com/pt/games/double">Double</a>  \n⚪️ Cobrir o BRANCO  \n💰 Apostar: [ENTRADA]',
+                    abertura:res.abertura,
+                    fechamento:res.fechamento,
+                    atencao:res.atencao,
+                    cofirmacao:res.cofirmacao,
+                    win:res.win,
+                    loss:res.loss,
+                    martingale:res.martingale,
+                    branco:res.branco,
+                    parcial:res.parcial,
+                    final:res.final,
+                    statusmensagem:res.statusmensagem,
+                    statusmartingale:res.statusmartingale,
+                    statusparcialfinal:res.statusparcialfinal,
+                    statuscoberturabranco:res.statuscoberturabranco,
 
-                    
-                    win:'✅✅✅GREEN - BATEU META? VAZA \n[COR_SEQUENCIA]  \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                    
-                    loss:'⛔ RED - SEGUE GERENCIAMENTO \n[COR_SEQUENCIA] \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
 
-                    martingale:'🔁 [NUMERO]º Martingale!',
+                    manhainicio:res.manhainicio,
+                    manhafim:res.manhafim,
+                    tardeinicio:res.tardeinicio,
+                    tardefim:res.tardefim,
+                    noiteinicio:res.noiteinicio,
+                    noiteifim:res.noiteifim,
+                    statusmanha:res.statusmanha,
+                    statustarde:res.statustarde,
+                    statusnoite:res.statusnoite,
 
-                    branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑Green no Branco🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
-                    parcial:'🚀Resultado parcial \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                    final:'🚀Resultado Final \n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
-                
-            }); 
+                    tipomensagem:res.tipomensagem,
+                });
+            })
+
         }else if(tipoJogo.nome.includes('Crash')){
            // console.log(tipoJogo)
             tipoJogo.mensagensaviator.map(async res=>{

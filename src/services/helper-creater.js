@@ -16,6 +16,7 @@ const TipoJogo = require('../models/dtb_tipojogo');
 const EstrategiaRoleta = require('../models/dtb_estrategia_bet365');    
 const MsgRoleta = require('../models/dtb_mensagem_padrao_bet365');    
 const EstrategiaDouble = require('../models/dtb_estrategia_double');
+const MsgDouble = require('../models/dtb_mensagem_padrao_double');
 
 module.exports ={
     async createDouble(tipoJogoId){
@@ -70,7 +71,46 @@ module.exports ={
             apostar_em:'1',
             martingale:'2',
         }); 
+   
+        await MsgDouble.create({
+            bot_id: tipoJogoId,
+            abertura:'             ⚠️ ATENÇÃO ⚠️ \n\nIniciaremos o envio dos sinais em breve. \n\nFique atento e proveita fechamento', 
+            fechamento:'             Sinais encerrado \n\nSe você deseja continuar recebendo os sinais 24Hrs, convidamos a fazer parte do nosso grupo VIP. \n\nNão perca esta oportunidade!',  
+            atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 BraxBet: [LINK_JOGO] \n\n      🌟🌟🌟 [LINK_CADASTRE_AQUI] 🌟🌟🌟',
+            
+            cofirmacao:'🔔 Entrada Confirmada 🔔||🔕 Entrada Finalizada 🔕|| \n🎰 Braxbet: [LINK_JOGO] \n💰 Entrar após [ULTIMA_VELA]  \n🚀 Auto retirar [ENTRADA]',
 
+            win:'✅✅✅GREEN - BATEU META? VAZA \n[RESULTADOS]',
+            
+            loss:'⛔ RED - SEGUE GERENCIAMENTO \n[RESULTADOS]',
+
+            martingale:'🔁 [NUMERO]º Martingale!',
+
+            branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑 Empate 🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
+            parcial:'🚀Resultado parcial \n\n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
+            final:'🚀Resultado Final \n\n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
+            tipomensagem:1,
+        });
+
+        await MsgDouble.create({
+            bot_id: tipoJogoId,
+            atencao:'⚠️ ATENÇÃO, possível entrada \n⌚️ Aguarde a confirmação \n🎰 BraxBet: [LINK_JOGO] \n\n      🌟🌟🌟 [LINK_CADASTRE_AQUI] 🌟🌟🌟',
+            
+            cofirmacao:'🔔 Entrada Confirmada 🔔||🔕 Entrada Finalizada 🔕|| \n🎰 Braxbet: [LINK_JOGO] \n💰 Entrar após [ULTIMA_VELA]  \n🚀 Auto retirar [ENTRADA]',
+
+            
+            win:'✅✅✅GREEN - BATEU META? VAZA \n[RESULTADOS]',
+            
+            loss:'⛔ RED - SEGUE GERENCIAMENTO \n[RESULTADOS]',
+
+            martingale:'🔁 [NUMERO]º Martingale!',
+
+            branco:'🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥\n🤑🤑🤑🤑🤑 Empate 🤑🤑🤑🤑🤑\n🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥🔥',
+            parcial:'🚀Resultado parcial \n\n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
+            final:'🚀Resultado Final \n\n✅([ACERTOS]) VS ❌([ERROS]) \nAssertividade: [PORCENTAGEM_ACERTO]',
+            tipomensagem:2,
+        });  
+    
 
     },
     async createMiner(tipoJogoId){

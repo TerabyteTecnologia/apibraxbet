@@ -67,16 +67,7 @@ module.exports = {
         defaultValue: 1,
       },
       
-      created_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.fn('now')
-      }, 
-      updated_at: {
-        type: Sequelize.DATE,
-        allowNull: false,
-        defaultValue: Sequelize.fn('now')
-      }, 
+    
 
        //Padrao
       tipomensagem:{
@@ -136,6 +127,17 @@ module.exports = {
       },
       //fim padrao
       
+
+      created_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn('now')
+      }, 
+      updated_at: {
+        type: Sequelize.DATE,
+        allowNull: false,
+        defaultValue: Sequelize.fn('now')
+      }, 
 
    },{
     charset: 'utf8mb4',

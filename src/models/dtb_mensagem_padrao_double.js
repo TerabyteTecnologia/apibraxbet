@@ -1,7 +1,7 @@
 
 const { Model, DataTypes } = require('sequelize');
 
-class dtb_mensagem_double extends Model {
+class dtb_mensagem_padrao_double extends Model {
   static init(sequelize) {
     super.init({
       bot_id:DataTypes.INTEGER,
@@ -46,7 +46,7 @@ class dtb_mensagem_double extends Model {
 
 }
 
-module.exports = dtb_mensagem_double;
+module.exports = dtb_mensagem_padrao_double;
 
 
 
