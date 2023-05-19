@@ -22,4 +22,5 @@ router.delete('/delete/:id',authService.isAdmin,controller.excluirgrupo);
 
 router.get('/buscarodrigo/:id',authService.authorizeRodrigo,controller.bucaGrupoRodrigo);
 
+router.put('/mudastatusgruporodrigo/:id',authService.authorizeRodrigo,controller.mudastatus);
 module.exports =router;

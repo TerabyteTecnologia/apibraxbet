@@ -904,6 +904,7 @@ catch(err){
 
 async bucaGrupoRodrigo(req,res){
     const { id } = req.params;
+    console.log('grupo')
        const grupo = await Grupo.findByPk(id,
         {include:[
             {association:"usuario"},
@@ -925,7 +926,8 @@ async bucaGrupoRodrigo(req,res){
                 msg:'Grupo não existe',
             
             })
-        }
+        } 
+        
         const tipoJogo = await TipoJogo.findOne( {where:{id:grupo.tipojogo_id},
            include:[
                 {association:"estrategiascrash"},
