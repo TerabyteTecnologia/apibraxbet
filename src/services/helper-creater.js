@@ -552,7 +552,7 @@ module.exports ={
         
           if(tipoJogoName.includes('Crash')){
             var aviator = await EstrategiaAviator.findOne({where:{ id:id }});
-            console.log('aviator',aviator)
+           
             await aviator.update({
                 win:win,
                 loss:loss

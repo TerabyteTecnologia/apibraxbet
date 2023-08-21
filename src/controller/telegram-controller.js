@@ -5,7 +5,7 @@ module.exports = {
   async enviarMensagem(req,res){
     
     const {bottoken,chatid,message,userid} = req.body;
-    console.log(bottoken)
+
     const bot = new Telegraf(bottoken)
    
     //const resposta = await bot.telegram.senContac(chatid);
@@ -22,7 +22,7 @@ module.exports = {
   async banUser(req,res){
     
     const {bottoken,chatid,message,userid} = req.body;
-    console.log(bottoken)
+    
     const bot = new Telegraf(bottoken)
   
     //const resposta = await bot.telegram.getChatMember(chatid,userid);

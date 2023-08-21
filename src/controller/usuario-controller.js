@@ -6,7 +6,7 @@
  const DtbCrashOneWin = require('../models/Betano/dtb_umwin_aviator');
  const DtbCrashEstrelaBet= require('../models/Betano/dtb_estrelabet_aviator');
  const md5 = require('md5');
-
+ const Sequelize = require('sequelize');
 module.exports = {
 async updatesenha(req,res){
          
@@ -230,7 +230,39 @@ catch(err){
 
 async index(req,res){
     try{
-        const usuarios = await Usuario.findAll();
+     
+        let usuarios = null
+        if(req.params.checked == 'false'){
+          usuarios = await Usuario.findAll({
+            attributes: {
+                include: [
+                  [
+                    Sequelize.literal('(SELECT COUNT(*) FROM dtb_bots WHERE dtb_bots.usuario_id = usuarios.id)'),
+                    'quantidade_de_bots' // Nome do atributo que conterá o resultado da contagem
+                  ]
+                ]
+              },
+          });
+         
+        }else{
+            usuarios= await Usuario.findAll({
+                where:{
+                    status:'A'
+               },
+               attributes: {
+                
+                include: [
+                  [
+                    Sequelize.literal('(SELECT COUNT(*) FROM dtb_bots WHERE dtb_bots.usuario_id = usuarios.id)'),
+                    'quantidade_de_bots' // Nome do atributo que conterá o resultado da contagem
+                  ]
+                ]
+              },
+        });
+        
+        }
+
+      
         return res.status(201).send({
             usuarios:usuarios
         })
@@ -522,7 +554,7 @@ async storeBetano(req,res){
     })
 }
 catch(err){
-    console.log(err);
+    
     return res.status(200).send({
        
         resolucao:false,
@@ -565,7 +597,7 @@ async storeOneWin(req,res){
     })
 }
 catch(err){
-    console.log(err);
+
     return res.status(200).send({
        
         resolucao:false,
@@ -607,7 +639,7 @@ async storeEstrelaBetAviator(req,res){
     })
 }
 catch(err){
-    console.log(err);
+    
     return res.status(200).send({
        
         resolucao:false,
